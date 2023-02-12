@@ -16,7 +16,7 @@
                     <div class="flex" style="align-items: center">
                         <h3 style="font-weight: 500">Account status</h3>
                         <div style="margin-left: 20px; margin-bottom: 11px; margin-right: 12px; background-color: rgb(11, 209, 138); box-shadow: rgb(11 209 138 / 30%) 0px 6px 20px; border-radius: 8px; padding: 11px; align-self: center">
-                            Conservador
+                            Conservative
                         </div>
                     </div>
                     <div class="grid" style="padding-bottom: 17px">
