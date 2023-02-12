@@ -1,7 +1,6 @@
 <template>
     <div :class="['layout-inline-menu', {'layout-inline-menu-active': activeInlineProfile}]" v-if="!isMobile() && (isStatic() || isSlim() || isSidebar())">
         <a class="layout-inline-menu-action" @click="onChangeActiveInlineMenu">
-            <img src="layout/images/profile-image.png" alt="avatar" style="width: 44px; height: 44px;">
             <span class="layout-inline-menu-text">Gene Russell</span>
             <i class="layout-inline-menu-icon pi pi-angle-down"></i>
         </a>
@@ -15,13 +14,7 @@
                     </a>
                 </li>
                 <li class="layout-inline-menu-action-item">
-                    <a>
-                        <i class="pi pi-cog pi-fw"></i>
-                        <span>Settings</span>
-                    </a>
-                </li>
-                <li class="layout-inline-menu-action-item">
-                    <a>
+                    <a href="/editProfile">
                         <i class="pi pi-user pi-fw"></i>
                         <span>Profile</span>
                     </a>

@@ -6,11 +6,11 @@
             </a>
 
             <a href="#" class="logo">
-                <img :src="'layout/images/logo-'+ (colorScheme === 'light' ? 'dark' : 'light') + '.png'">
+                <img :src="'layout/images/logo-'+ (colorScheme === 'light' ? 'dark' : 'light') + '.svg'">
             </a>
 
             <a href="#">
-                <img :src="'layout/images/appname-'+ (colorScheme === 'light' ? 'dark' : 'light') + '.png'" class="app-name"/>
+                <img :src="'layout/images/appname-'+ (colorScheme === 'light' ? 'dark' : 'light') + '.svg'" class="app-name"/>
             </a>
         </div>
 
@@ -22,7 +22,7 @@
             <ul class="layout-topbar-right-items">
                 <li id="profile" class="profile-item" :class="{'active-topmenuitem': topbarMenuActive}">
                     <a href="#" @click="onTopbarItemClick($event, 'profile')">
-                        <img src="layout/images/profile-image.png">
+                        <i class="pi pi-fw pi-user"></i>
                     </a>
 
                     <ul class="fadeInDown">
@@ -34,31 +34,11 @@
                         </li>
                         <li role="menuitem">
                             <a href="#" @click="onTopbarSubItemClick($event)">
-                                <i class="pi pi-fw pi-cog"></i>
-                                <span>Settings</span>
-                            </a>
-                        </li>
-                        <li role="menuitem">
-                            <a href="#" @click="onTopbarSubItemClick($event)">
                                 <i class="pi pi-fw pi-sign-out"></i>
                                 <span>Logout</span>
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="topbar-icon pi pi-fw pi-bell"></i>
-                        <span class="topbar-badge">2</span>
-                        <span class="topbar-item-name">Notifications</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="topbar-icon pi pi-fw pi-comment"></i>
-                        <span class="topbar-badge">5</span>
-                        <span class="topbar-item-name">Messages</span>
-                    </a>
                 </li>
             </ul>
         </div>

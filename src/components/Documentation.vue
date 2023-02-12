@@ -99,7 +99,7 @@ data() &#123;
 				label: 'Favorites', 
 				icon: 'pi pi-fw pi-home',
 				items: [
-					{label: 'Dashboard Sales', icon: 'pi pi-fw pi-home', to: '/'}
+					{label: 'Dashboard JetTrader', icon: 'pi pi-fw pi-home', to: '/'}
 				]
 			},
 			{
@@ -283,7 +283,7 @@ import './App.scss'; 	                            //your styles and overrides
                 <p>Here are the variables required to create a theme, you may need to change the last line according to the relative path of the sass folder in your application.</p>
 
 <pre v-code.css><code>
-$primaryColor: #0F8BFD;
+$primaryColor: #FFC100;
 $primaryLightColor: scale-color($primaryColor, $lightness: 60%) !default;
 $primaryDarkColor: scale-color($primaryColor, $lightness: -10%) !default;
 $primaryDarkerColor: scale-color($primaryColor, $lightness: -20%) !default;
@@ -322,7 +322,7 @@ sass --update public/theme/:public/theme/
 
                 <p>Here are the variables required to create a layout, you may need to change the last line according to the relative path of the sass folder in your application.</p>
 <pre v-code.css><code>
-$primaryColor: #0F8BFD;
+$primaryColor: #FFC100;
 $primaryTextColor: #ffffff;
 
 @import '../../../../src/assets/sass/layout/_layout_dark';

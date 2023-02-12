@@ -85,7 +85,7 @@ export default {
     data() {
         return {
             themes: [
-                {name: 'blue', color: '#0F8BFD'},
+                {name: 'blue', color: '#FFC100'},
                 {name: 'green', color: '#0BD18A'},
                 {name: 'magenta', color: '#EC4DBC'},
                 {name: 'orange', color: '#FD9214'},
@@ -95,7 +95,7 @@ export default {
                 {name: 'yellow', color: '#EEE500'}
             ],
             componentThemes: [
-                {name: 'blue', color: '#0F8BFD'},
+                {name: 'blue', color: '#FFC100'},
                 {name: 'green', color: '#0BD18A'},
                 {name: 'magenta', color: '#EC4DBC'},
                 {name: 'orange', color: '#FD9214'},

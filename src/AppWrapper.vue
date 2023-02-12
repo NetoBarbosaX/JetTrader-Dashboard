@@ -1,6 +1,10 @@
 <template>
     <Login v-if="$route.path === '/login'" />
     <Error v-else-if="$route.path === '/error'" />
+    <Verification v-else-if="$route.path === '/verification'" />
+    <ForgotPassword v-else-if="$route.path === '/forgotPassword'" />
+    <TrueCheck v-else-if="$route.path === '/trueCheck'" />
+    <Register v-else-if="$route.path === '/register'" />
     <Access v-else-if="$route.path === '/access'" />
     <NotFound v-else-if="$route.path === '/notfound'" />
     <App :theme="theme" :colorScheme="colorScheme" :componentTheme="componentTheme"
@@ -12,6 +16,10 @@
     import Error from './pages/Error';
     import Access from './pages/Access';
     import Login from './pages/Login';
+    import ForgotPassword from './pages/ForgotPassword';
+    import Verification from './pages/Verification';
+    import TrueCheck from './pages/TrueCheck';
+    import Register from './pages/Register';
     import NotFound from './pages/NotFound';
 
 	export default {
@@ -81,7 +89,11 @@
             'Error': Error,
             'Access': Access,
             'Login': Login,
-            'NotFound': NotFound
+            'ForgotPassword': ForgotPassword,
+            'Register': Register,
+            'NotFound': NotFound,
+            'Verification': Verification,
+            'TrueCheck': TrueCheck,
         }
 	}
 </script>

@@ -1,13 +1,13 @@
 <template>
     <div class="login-body">
         <div class="login-image">
-            <img :src="'layout/images/pages/login-'+ loginColor + '.png'" alt="atlantis">
+            <img :src="'layout/images/pages/login-' + loginColor + '.svg'" alt="atlantis" />
         </div>
         <div class="login-panel p-fluid">
             <div class="flex flex-column">
                 <div class="flex align-items-center mb-6 logo-container">
-                    <img :src="'layout/images/logo-'+ color + '.png'" class="login-logo"/>
-                    <img :src="'layout/images/appname-'+ color + '.png'" class="login-appname"/>
+                    <img :src="'layout/images/logo-' + color + '.svg'" class="login-logo" />
+                    <img :src="'layout/images/appname-' + color + '.svg'" class="login-appname" />
                 </div>
                 <div class="form-container">
                     <span class="p-input-icon-left">
@@ -18,20 +18,20 @@
                         <i class="pi pi-key"></i>
                         <InputText value="password" type="password" placeholder="Password" />
                     </span>
-                    <a href="#" class="flex">Forgot your password?</a>
+                    <a href="/forgotPassword" class="flex">Forgot your password?</a>
                 </div>
                 <div class="button-container">
                     <router-link to="/">
                         <Button type="button" label="Login"></Button>
                     </router-link>
-                    <span>Don’t have an account?<a>Sign-up here</a></span>
+                    <span>Don’t have an account?<a href="/register">Sign-up here</a></span>
                 </div>
             </div>
 
             <div class="login-footer flex align-items-center">
                 <div class="flex align-items-center login-footer-logo-container">
-                    <img src="layout/images/logo-gray.png" class="login-footer-logo"/>
-                    <img src="layout/images/appname-gray.png" class="login-footer-appname"/>
+                    <img :src="'layout/images/logo-' + color + '.svg'" class="login-logo" style="width: 30px" />
+                    <img :src="'layout/images/appname-' + color + '.svg'" class="login-appname" style="width: 120px" />
                 </div>
                 <span>Copyright 2021</span>
             </div>
@@ -42,11 +42,11 @@
 <script>
 export default {
     data() {
-		return {
-			email: '',
-			password: ''
-		}
-	},
+        return {
+            email: '',
+            password: '',
+        };
+    },
     computed: {
         loginColor() {
             if (this.$appState.colorScheme === 'light') return 'ondark';
@@ -55,7 +55,7 @@ export default {
         color() {
             if (this.$appState.colorScheme === 'light') return 'dark';
             return 'light';
-        }
-    }
-}
+        },
+    },
+};
 </script>
