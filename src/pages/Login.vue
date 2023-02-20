@@ -12,18 +12,16 @@
                 <div class="form-container">
                     <span class="p-input-icon-left">
                         <i class="pi pi-envelope"></i>
-                        <InputText value="email" type="text" placeholder="Email" />
+                        <InputText type="text" placeholder="Email" v-model="userData.email" />
                     </span>
                     <span class="p-input-icon-left">
                         <i class="pi pi-key"></i>
-                        <InputText value="password" type="password" placeholder="Password" />
+                        <InputText type="password" placeholder="Password" v-model="userData.password" />
                     </span>
                     <a href="/forgotPassword" class="flex">Forgot your password?</a>
                 </div>
                 <div class="button-container">
-                    <router-link to="/">
-                        <Button type="button" label="Login"></Button>
-                    </router-link>
+                    <Button :disabled="validFields" type="button" @click="login" label="Login"></Button>
                     <span>Don’t have an account?<a href="/register">Sign-up here</a></span>
                 </div>
             </div>
@@ -33,19 +31,35 @@
                     <img :src="'layout/images/logo-' + color + '.svg'" class="login-logo" style="width: 30px" />
                     <img :src="'layout/images/appname-' + color + '.svg'" class="login-appname" style="width: 120px" />
                 </div>
-                <span>Copyright 2021</span>
+                <span>Copyright 2023</span>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
-            email: '',
-            password: '',
+            userData: {
+                email: '',
+                password: '',
+            },
         };
+    },
+    methods: {
+        login() {
+            console.log(this.userData);
+            axios
+                .post('/api/submit', this.userData)
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
     },
     computed: {
         loginColor() {
@@ -55,6 +69,9 @@ export default {
         color() {
             if (this.$appState.colorScheme === 'light') return 'dark';
             return 'light';
+        },
+        validFields() {
+            return this.userData.email.trim() === '' || this.userData.password.trim() === '';
         },
     },
 };

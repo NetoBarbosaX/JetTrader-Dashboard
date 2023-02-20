@@ -16,26 +16,20 @@
                     <div class="form-container">
                         <span class="p-input-icon-left">
                             <i class="pi pi-envelope"></i>
-                            <InputText value="" type="text" placeholder="Email" />
+                            <InputText v-model="userData.email" type="text" placeholder="Email" />
                         </span>
                     </div>
                     <div class="button-container">
-                        <Button @click="submit()" type="button" label="Submit"></Button>
+                        <Button @click="handleSubmit()" type="button" label="Submit"></Button>
                         <span>Back to <a href="/login">login</a></span>
                     </div>
                 </div>
                 <div v-show="checked" class="form-container">
                     <div style="text-align: start" class="form-container">
-                        <Tag
-                            style="background: rgb(46, 199, 114); width: 319px; padding-bottom: 50px; padding-top: 50px; margin-bottom: 15px"
-                            class="mr-2"
-                            value="Email successfully sent"
-                            aria-label="Tabable Primary Tag"
-                            tabindex="0"
-                        ></Tag>
+                        <Tag style="background: rgb(46, 199, 114); width: 319px; padding-bottom: 50px; padding-top: 50px; margin-bottom: 15px" class="mr-2" value="Email successfully sent" aria-label="Tabable Primary Tag" tabindex="0"></Tag>
                     </div>
                     <div class="button-container">
-                        <Button @click="submit()" type="button" label="Submit"></Button>
+                        <Button type="button" label="Submit"></Button>
                         <span>Back to <a href="/login">login</a></span>
                     </div>
                 </div>
@@ -46,19 +40,21 @@
                     <img :src="'layout/images/logo-' + color + '.svg'" class="login-logo" style="width: 30px" />
                     <img :src="'layout/images/appname-' + color + '.svg'" class="login-appname" style="width: 120px" />
                 </div>
-                <span>Copyright 2021</span>
+                <span>Copyright 2023</span>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
             checked: false,
-            email: '',
-            password: '',
+            userData: {
+                email: '',
+            },
         };
     },
     computed: {
@@ -74,6 +70,17 @@ export default {
     methods: {
         submit() {
             this.checked = true;
+        },
+        handleSubmit() {
+            console.log(this.userData);
+            axios
+                .post('/api/submit', this.userData)
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     },
 };

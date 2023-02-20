@@ -60,6 +60,26 @@ const routes = [
         name: 'payments',
         component: () => import('./pages/Payments.vue'),
     },
+    {
+        path: '/tickets',
+        name: 'tickets',
+        component: () => import('./pages/Tickets.vue'),
+    },
+    {
+        path: '/dashboardAdmin',
+        name: 'dashboardAdmin',
+        component: () => import('./PagesAdmin/DashboardAdmin.vue'),
+    },
+    {
+        path: '/usersAdmin',
+        name: 'usersAdmin',
+        component: () => import('./PagesAdmin/UsersAdmin.vue'),
+    },
+    {
+        path: '/finance',
+        name: 'finance',
+        component: () => import('./PagesAdmin/Finance.vue'),
+    },
 ];
 
 const router = createRouter({

@@ -15,7 +15,7 @@
                             <div>
                                 <img style="" :src="'layout/images/positiveIcon.svg'" class="login-appname" />
                             </div>
-                            <span>Email verified, go to your Dashboard!</span>
+                            <span>Email verified, go to your Login!</span>
                         </div>
                     </div>
                     <router-link to="/login">
@@ -29,18 +29,21 @@
                     <img :src="'layout/images/logo-' + color + '.svg'" class="login-logo" style="width: 30px" />
                     <img :src="'layout/images/appname-' + color + '.svg'" class="login-appname" style="width: 120px" />
                 </div>
-                <span>Copyright 2021</span>
+                <span>Copyright 2023</span>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { useRoute } from 'vue-router';
+
 export default {
     data() {
         return {
             email: '',
             password: '',
+            id: '',
         };
     },
     computed: {
@@ -52,7 +55,14 @@ export default {
             if (this.$appState.colorScheme === 'light') return 'dark';
             return 'light';
         },
+        verifyID() {
+           return console.log(this.selectedId);
+        },
     },
+    setup() {
+    const route = useRoute();
+    console.log(route.query);
+  }
 };
 </script>
 

@@ -28,7 +28,7 @@
                     <img :src="'layout/images/logo-' + color + '.svg'" class="login-logo" style="width: 30px" />
                     <img :src="'layout/images/appname-' + color + '.svg'" class="login-appname" style="width: 120px" />
                 </div>
-                <span>Copyright 2021</span>
+                <span>Copyright 2023</span>
             </div>
         </div>
     </div>

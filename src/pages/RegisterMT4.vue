@@ -8,18 +8,22 @@
                 <h5>New Account</h5>
                 <div class="field">
                     <label for="name1"> Account Name</label>
-                    <InputText placeholder="Name" id="name1" type="text" />
+                    <InputText placeholder="Name" id="name1" type="text" v-model="userDataMT4.name" />
                 </div>
                 <div class="field">
                     <label for="name1">Trading Account Number (ID)</label>
-                    <InputText placeholder="User ID" id="name1" type="text" />
+                    <InputText placeholder="User ID" id="name1" type="text" v-model="userDataMT4.tradeId" />
                 </div>
                 <div class="field">
                     <label for="email1">Trading password</label>
-                    <InputText placeholder="Password" id="email1" type="text" />
+                    <InputText placeholder="Password" id="email1" type="text" v-model="userDataMT4.tradePassword" />
+                </div>
+                <div class="field">
+                    <label for="email1">Server</label>
+                    <InputText placeholder="Server" id="Chain" type="text" v-model="userDataMT4.server" />
                 </div>
                 <div style="text-align: center">
-                    <Button @click="toggleDisabled(), handleChange()" style="width: 25%" label="Create"></Button>
+                    <Button :disabled="validFields" @click="handleSubmit" style="width: 25%" label="Create"></Button>
                 </div>
             </div>
             <div class="card">
@@ -39,6 +43,8 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -51,12 +57,11 @@ export default {
                 password: 'adsadadasd',
                 confirmPassword: 'adsadadasd',
             },
-            userEdit: {
+            userDataMT4: {
                 name: '',
-                email: '',
-                phone: '',
-                password: '',
-                confirmPassword: '',
+                tradeId: '',
+                tradePassword: '',
+                server: '',
             },
             dropdownItems: [
                 { name: 'Option 1', code: 'Option 1' },
@@ -67,6 +72,17 @@ export default {
         };
     },
     methods: {
+        handleSubmit() {
+            console.log(this.userDataMT4);
+            axios
+                .post('/api/submit', this.userDataMT4)
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
         toggleDisabled() {
             this.disabled = !this.disabled;
         },
@@ -87,6 +103,11 @@ export default {
             { code: 'av2231fwg', name: 'Elias Sales', category: 'Audacious', inventoryStatus: 'Pending' },
             { code: 'bib36pfvm', name: 'Uzias', category: 'Audacious', inventoryStatus: 'Denied' },
         ];
+    },
+    computed: {
+        validFields() {
+            return this.userDataMT4.name.trim() === '' || this.userDataMT4.tradeId.trim() === '' || this.userDataMT4.tradePassword.trim() === '' || this.userDataMT4.server.trim() === '';
+        },
     },
 };
 </script>

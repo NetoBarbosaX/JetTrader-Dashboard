@@ -12,34 +12,36 @@
                 <div class="form-container">
                     <span class="p-input-icon-left">
                         <i class="pi pi-envelope"></i>
-                        <InputText value="" type="text" placeholder="Email" />
+                        <InputText type="text" placeholder="Email" v-model="userData.email" />
                     </span>
                     <span class="p-input-icon-left">
                         <i class="pi pi-book"></i>
-                        <InputText value="" type="name" placeholder="Name" />
+                        <InputText type="name" placeholder="Name" v-model="userData.name" />
                     </span>
                 </div>
                 <div class="form-container">
                     <span class="p-input-icon-left">
                         <i class="pi pi-key"></i>
-                        <InputText value="" type="password" placeholder="Password" />
+                        <InputText type="password" placeholder="Password" v-model="userData.password" />
+                    </span>
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-key"></i>
+                        <InputText type="password" placeholder="Confirm Password" v-model="userData.confirmPassword" />
                     </span>
                     <span class="p-input-icon-left">
                         <i class="pi pi-phone"></i>
-                        <InputText value="" type="phone" placeholder="Phone" />
+                        <InputText type="phone" placeholder="Phone" v-model="userData.phone" />
                     </span>
                 </div>
                 <div class="flex">
                     <div class="field-checkbox">
-                        <Checkbox inputId="binary" v-model="checked" :binary="true" />
-                        <label for="binary">{{ checked }}</label>
+                        <Checkbox inputId="binary" v-model="userData.checked" :binary="true" />
                     </div>
                     <span style="font-weight: 500; color: gray">I accept the terms of use.</span>
                 </div>
+
                 <div class="button-container">
-                    <router-link to="/verification">
-                        <Button type="button" label="Register"></Button>
-                    </router-link>
+                    <Button :disabled="validFields" type="button" @click="handleSubmit" label="Register"></Button>
                     <span>Already have an account?<a href="/login">Login</a></span>
                 </div>
             </div>
@@ -49,19 +51,46 @@
                     <img :src="'layout/images/logo-' + color + '.svg'" class="login-logo" style="width: 30px" />
                     <img :src="'layout/images/appname-' + color + '.svg'" class="login-appname" style="width: 120px" />
                 </div>
-                <span>Copyright 2021</span>
+                <span>Copyright 2023</span>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
-            email: '',
-            password: '',
+            disabled: true,
+
+            userData: {
+                name: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                phone: '',
+                checked: false,
+            },
         };
+    },
+    methods: {
+        handleSubmit() {
+            if (this.userData.name && this.userData.email && this.userData.password && this.userData.confirmPassword && this.userData.phone) {
+                console.log(this.userData);
+                axios
+                    .post('/api/submit', this.userData)
+                    .then((response) => {
+                        console.log(response.data);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            } else {
+                console.log('Please fill all the fields');
+            }
+        },
     },
     computed: {
         loginColor() {
@@ -71,6 +100,9 @@ export default {
         color() {
             if (this.$appState.colorScheme === 'light') return 'dark';
             return 'light';
+        },
+        validFields() {
+            return this.userData.name.trim() === '' || this.userData.email.trim() === '' || this.userData.password.trim() === '' || this.userData.confirmPassword.trim() === '' || this.userData.phone.trim() === '' || this.userData.checked == false;
         },
     },
 };

@@ -20,7 +20,7 @@
             />
 
             <AppMenu
-                :model="menu"
+                :model="admin ? menuAdmin : menu"
                 :menuMode="menuMode"
                 :colorScheme="colorScheme"
                 :menuActive="menuActive"
@@ -73,6 +73,7 @@ export default {
     },
     data() {
         return {
+            admin: false,
             search: false,
             searchClick: false,
             searchActive: false,
@@ -97,6 +98,12 @@ export default {
                 { label: 'Risk profile', icon: 'pi pi-fw pi-briefcase', to: '/riskProfile' },
                 { label: 'MT4 Registration', icon: 'pi pi-book', to: '/registerMT4' },
                 { label: 'Payments', icon: 'pi pi-fw pi-dollar', to: '/payments' },
+                { label: 'Tickets', icon: 'pi pi-fw pi-exclamation-circle', to: '/tickets' },
+            ],
+            menuAdmin: [
+                { label: 'Dashboard Admin', icon: 'pi pi-fw pi-home', to: '/dashboardAdmin' },
+                { label: 'Users', icon: 'pi pi-fw pi-cog', to: '/usersAdmin' },
+                { label: 'Finance', icon: 'pi pi-fw pi-money-bill', to: '/finance' },
             ],
         };
     },
