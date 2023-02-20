@@ -5,9 +5,9 @@
                 <DataTable :value="products" responsiveLayout="scroll">
                     <template #header> Finance </template>
                     <Column field="code" header="Plans "></Column>
-                    <Column field="name" header="Account ID"></Column>
-                    <Column field="category" header="Value"></Column>
-                    <Column field="category" header="Data"></Column>
+                    <Column field="id" header="Account ID"></Column>
+                    <Column field="value" header="Value"></Column>
+                    <Column field="date" header="Data"></Column>
                     <Column field="inventoryStatus" header="Action" style="width: 1px">
                         <template #body="">
                             <div class="flex">
@@ -76,11 +76,11 @@ export default {
     },
     created() {
         this.products = [
-            { code: 'f230fh0g3', name: 'Marco', category: 'Conservative', inventoryStatus: 'Approved' },
-            { code: 'zz21cz3c1', name: 'Elias', category: 'Conservative', inventoryStatus: 'Denied' },
-            { code: '244wgerg2', name: 'Juka', category: 'Moderate', inventoryStatus: 'Approved' },
-            { code: 'av2231fwg', name: 'Elias Sales', category: 'Audacious', inventoryStatus: 'Pending' },
-            { code: 'bib36pfvm', name: 'Uzias', category: 'Audacious', inventoryStatus: 'Denied' },
+            { code: 'f230fh0g3', id: '1', value: '1000', inventoryStatus: 'Approved', date: '20/03/2023' },
+            { code: 'zz21cz3c1', id: '4', value: '230', inventoryStatus: 'Denied', date: '20/03/2023' },
+            { code: '244wgerg2', id: '67', value: '70', inventoryStatus: 'Approved', date: '20/03/2023' },
+            { code: 'av2231fwg', id: '1', value: '90', inventoryStatus: 'Pending', date: '20/03/2023' },
+            { code: 'bib36pfvm', id: '1', value: '10', inventoryStatus: 'Denied', date: '20/03/2023' },
         ];
     },
 };

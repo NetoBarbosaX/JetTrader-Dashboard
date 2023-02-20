@@ -72,6 +72,7 @@ export default {
                     accumulatedGain: '0',
                     accumulatedEarnings: '0',
                 },
+                
             ],
         };
     },

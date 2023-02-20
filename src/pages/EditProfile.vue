@@ -20,20 +20,22 @@
                 </div>
                 <div class="field">
                     <label for="age1">Password</label>
-                    <InputText v-model="userEdit.password" :placeholder="user.password" :disabled="disabled" id="age1" type="password" />
+                    <InputText v-model="userEdit.password" placeholder="********" :disabled="disabled" id="age1" type="password" />
                 </div>
                 <div class="field">
                     <label for="age1">Confirm Password</label>
-                    <InputText v-model="userEdit.password" :placeholder="user.name" :disabled="disabled" id="age1" type="password" />
+                    <InputText v-model="userEdit.confirmPassword" placeholder="********" :disabled="disabled" id="age1" type="password" />
                 </div>
                 <div style="text-align: center">
-                    <Button @click="toggleDisabled(), handleChange()" :disabled="disabled" style="width: 25%" label="Submit"></Button>
+                    <Button @click="toggleDisabled(), handleSubmit()" :disabled="disabled" style="width: 25%" label="Submit"></Button>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+import axios from 'axios';
+
 export default {
     data() {
         return {
@@ -64,13 +66,16 @@ export default {
         toggleDisabled() {
             this.disabled = !this.disabled;
         },
-        handleChange() {
-            this.user.name = this.userEdit.name;
-            this.user.email = this.userEdit.email;
-            this.user.phone = this.userEdit.phone;
-            this.user.password = this.userEdit.password;
-            this.user.confirmPassword = this.userEdit.confirmPassword;
-            console.log(this.user);
+        handleSubmit() {
+            console.log(this.userEdit);
+            axios
+                .post('/api/submit', this.userEdit)
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     },
 };
