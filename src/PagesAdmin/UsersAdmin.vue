@@ -46,12 +46,13 @@ export default {
     methods: {
         onRowEditSave(event) {
             let { newData, index } = event;
-
-            this.editTable[index] = newData;
+            debugger;
+            this.editTable.data[index] = newData;
             console.log(this.editTable.data);
             axios
                 .post('/api/submit', this.editTable.data)
                 .then((response) => {
+                    debugger;
                     console.log(response.data);
                 })
                 .catch((error) => {
@@ -72,7 +73,16 @@ export default {
                     accumulatedGain: '0',
                     accumulatedEarnings: '0',
                 },
-                
+                {
+                    id: '1',
+                    username: 'Jet Trader',
+                    plan: 'Jet-Trader',
+                    accountId: '1',
+                    amount: '0',
+                    dailyProfit: '0',
+                    accumulatedGain: '0',
+                    accumulatedEarnings: '0',
+                },
             ],
         };
     },
