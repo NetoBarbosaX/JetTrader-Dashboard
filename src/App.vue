@@ -73,7 +73,7 @@ export default {
     },
     data() {
         return {
-            admin: false,
+            admin: true,
             search: false,
             searchClick: false,
             searchActive: false,

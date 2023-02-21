@@ -74,7 +74,7 @@ export default {
                     accumulatedEarnings: '0',
                 },
                 {
-                    id: '1',
+                    id: '2',
                     username: 'Jet Trader',
                     plan: 'Jet-Trader',
                     accountId: '1',

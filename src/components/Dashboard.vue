@@ -27,7 +27,7 @@
                             <div class="">
                                 <InputText style="height: 50px" disabled v-on:focus="$event.target.select()" ref="myinput" :value="this.link" type="text" :placeholder="this.link" />
                                 <router-link to="/https://www.hfm.com/?refid=364649">
-                                    <Button style=" border-color: gray; height: 50px" label="Go" />
+                                    <Button style="border-color: gray; height: 50px" label="Go" />
                                 </router-link>
                             </div>
                         </div>
@@ -240,7 +240,7 @@
                                 </div>
                                 <div class="overview-text">${{ accountBot[index].bot.accumulatedEarnings }}</div>
                             </div>
-                            <Button style="background: rgb(11, 209, 138); border: none; width: 90px" @click="confirm1($event)" icon="pi pi-check" label="Pay $" class="mr-2"></Button>
+                            <Button style="background: rgb(11, 209, 138); border: none; width: 90px" @click="confirm1($event, accountBot[index].bot.id)" icon="pi pi-check" label="Pay $" class="mr-2"></Button>
                         </div>
                     </div>
                 </div>
@@ -252,18 +252,33 @@
 <script>
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import axios from 'axios';
 
 export default {
     data() {
         return {
             index: 0,
+            idHash: '',
             accountBot: [
                 {
-                    id: '#4542',
+                    id: '4542',
                     value: '308.2',
                     percent: '4.2',
                     bot: {
-                        id: '#4542',
+                        id: '4542',
+                        amount: '308.2',
+                        daily: '-0.6',
+                        accumulatedGain: '12',
+                        accumulatedEarnings: '120',
+                        percent: '4.2',
+                    },
+                },
+                {
+                    id: '111',
+                    value: '308.2',
+                    percent: '4.2',
+                    bot: {
+                        id: '111',
                         amount: '308.2',
                         daily: '-0.6',
                         accumulatedGain: '12',
@@ -276,17 +291,25 @@ export default {
         };
     },
     created() {},
-    mounted() {
-        console.log(this.accountBot[0].bot);
-    },
+    mounted() {},
     methods: {
-        confirm1(event) {
+        confirm1(event, id) {
+            this.idHash = id;
             this.$confirm.require({
                 target: event.currentTarget,
                 message: 'Send the amount informed in the Accumulated Earnings panel to the wallet "0x89566A6aa1943a6FDb178367229E132B51F6B343" in USDT!',
                 icon: 'pi pi-shield',
                 accept: () => {
                     this.$toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Payment reported successfully', life: 3000 });
+                    console.log(this.idHash);
+                    axios
+                        .post('/api/submit', this.idHash)
+                        .then((response) => {
+                            console.log(response.data);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
                 },
                 reject: () => {
                     this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'Uninformed payment', life: 3000 });
