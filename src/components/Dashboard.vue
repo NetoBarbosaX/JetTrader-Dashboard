@@ -231,16 +231,35 @@
                         </div>
                     </div>
                     <div v-else style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-2">
-                        <span class="overview-title"> Accumulated Earnings (Jet Trader) </span>
+                        <div class="flex" style="place-items: center">
+                            <span class="overview-title" style="padding-right: 10px"> Accumulated Earnings (Jet Trader) </span>
+                            <Button
+                                @click="copyMessage(), showToast()"
+                                style="background-color: rgb(11, 209, 138); box-shadow: rgb(11 209 138 / 30%) 0px 6px 20px; border-radius: 8px"
+                                type="button"
+                                icon="pi pi-info"
+                                v-tooltip="'Click to copy sending wallet address'"
+                            />
+                        </div>
                         <div class="flex justify-content-between">
                             <div class="overview-detail flex justify-content-between">
                                 <div class="overview-badge flex justify-content-center align-items-center">
                                     <i class="pi pi-arrow-up"></i>
                                     <span>4,2%</span>
                                 </div>
-                                <div class="overview-text">${{ accountBot[index].bot.accumulatedEarnings }}</div>
+                                <div class="overview-text" style="padding-right: 100px">${{ accountBot[index].bot.accumulatedEarnings }}</div>
                             </div>
-                            <Button style="background: rgb(11, 209, 138); border: none; width: 90px" @click="confirm1($event, accountBot[index].bot.id)" icon="pi pi-check" label="Pay $" class="mr-2"></Button>
+                            <InputText style="width: 100px" type="text" placeholder="Payment Hash" v-model="accountBot[index].bot.hash" />
+                            <Button
+                                v-if="accountBot[index].bot.hash === ''"
+                                :disabled="accountBot[index].bot.hash"
+                                style="background: rgb(11, 209, 138); border: none; width: 90px"
+                                @click="confirm1($event, accountBot[index].bot.id)"
+                                icon="pi pi-check"
+                                label="Pay $"
+                                class="mr-2"
+                            ></Button>
+                            <Button v-else style="background: rgb(11, 209, 138); border: none; width: 90px" @click="confirm1($event, accountBot[index].bot.id, accountBot[index].bot.hash)" icon="pi pi-check" label="Pay $" class="mr-2"></Button>
                         </div>
                     </div>
                 </div>
@@ -258,7 +277,11 @@ export default {
     data() {
         return {
             index: 0,
-            idHash: '',
+            wallet: '0x89566A6aa1943a6FDb178367229E132B51F6B343',
+            paymentInfo: {
+                id: '',
+                hash: '',
+            },
             accountBot: [
                 {
                     id: '4542',
@@ -271,6 +294,7 @@ export default {
                         accumulatedGain: '12',
                         accumulatedEarnings: '120',
                         percent: '4.2',
+                        hash: '',
                     },
                 },
                 {
@@ -284,6 +308,7 @@ export default {
                         accumulatedGain: '12',
                         accumulatedEarnings: '120',
                         percent: '4.2',
+                        hash: '',
                     },
                 },
             ],
@@ -292,18 +317,20 @@ export default {
     },
     created() {},
     mounted() {},
+    computed: {},
     methods: {
-        confirm1(event, id) {
-            this.idHash = id;
+        confirm1(event, id, hash) {
+            this.paymentInfo.id = id;
+            this.paymentInfo.hash = hash;
+            console.log(this.paymentInfo);
             this.$confirm.require({
                 target: event.currentTarget,
-                message: 'Send the amount informed in the Accumulated Earnings panel to the wallet "0x89566A6aa1943a6FDb178367229E132B51F6B343" in USDT!',
+                message: 'Are you sure you want to report the payment?',
                 icon: 'pi pi-shield',
                 accept: () => {
                     this.$toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Payment reported successfully', life: 3000 });
-                    console.log(this.idHash);
                     axios
-                        .post('/api/submit', this.idHash)
+                        .post('/api/submit', this.paymentInfo)
                         .then((response) => {
                             console.log(response.data);
                         })
@@ -317,13 +344,13 @@ export default {
             });
         },
         showToast() {
-            toast.success('Copy', {
+            toast.success('Copied successfully, please send the amount indicated on the Accumulated Earnings panel to the address.', {
                 icon: '🚀',
-                autoClose: 500,
+                autoClose: 5000,
             });
         },
         copyMessage() {
-            navigator.clipboard.writeText(this.link).then(
+            navigator.clipboard.writeText(this.wallet).then(
                 function () {
                     console.log('Copied to clipboard successfully!');
                     this.showToast();

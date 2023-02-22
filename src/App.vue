@@ -103,6 +103,7 @@ export default {
             menuAdmin: [
                 { label: 'Dashboard Admin', icon: 'pi pi-fw pi-home', to: '/dashboardAdmin' },
                 { label: 'Users', icon: 'pi pi-fw pi-cog', to: '/usersAdmin' },
+                { label: 'Activate Plan', icon: 'pi pi-fw pi-check-square', to: '/activatePlan' },
                 { label: 'Finance', icon: 'pi pi-fw pi-money-bill', to: '/finance' },
             ],
         };

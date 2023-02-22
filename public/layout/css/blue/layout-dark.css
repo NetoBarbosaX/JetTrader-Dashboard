@@ -2434,7 +2434,6 @@ body a {
   height: 100vh;
 }
 .login-body .login-panel {
-  background-image: url("../../../layout/images/effect-ondark.png");
   background-repeat: no-repeat;
   text-align: center;
   width: 100%;

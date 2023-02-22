@@ -80,6 +80,11 @@ const routes = [
         name: 'finance',
         component: () => import('./PagesAdmin/Finance.vue'),
     },
+    {
+        path: '/activatePlan',
+        name: 'activatePlan',
+        component: () => import('./PagesAdmin/ActivatePlan.vue'),
+    },
 ];
 
 const router = createRouter({
