@@ -37,6 +37,7 @@
 </template>
 
 <script>
+
 import axios from 'axios';
 export default {
     data() {
@@ -79,6 +80,6 @@ export default {
 <style>
 .login-body{
     height: 100vh;
-    background-image: url('C:/Users/eletr/Desktop/AtlantisVue/public/layout/images/background.svg');
+    background-image: url('@/assets/background.svg');
 }
 </style>
