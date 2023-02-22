@@ -35,7 +35,10 @@ export default {
         return {
             disabled: true,
             info: [],
-            id: null,
+            data: {
+                id: '',
+                action: '',
+            },
             user: {
                 name: 'Jet Trader',
                 email: 'exemplo@exemplo.com',
@@ -53,11 +56,11 @@ export default {
     },
     methods: {
         confirmPayment(id) {
-            this.info[0] = id.data.id;
-            this.info[1] = 'Confirmed';
-            console.log(this.info);
+            this.data.id = id.data.id;
+            this.data.action = 'Confirmed';
+            console.log(this.data);
             axios
-                .post('/api/submit', this.info)
+                .post('/api/submit', this.data)
                 .then((response) => {
                     console.log(response.data);
                 })
@@ -66,9 +69,9 @@ export default {
                 });
         },
         rejectPayment(id) {
-            this.info[0] = id.data.id;
-            this.info[1] = 'Denied';
-            console.log(this.info);
+            this.data.id = id.data.id;
+            this.data.action = 'Denied';
+            console.log(this.data);
             axios
                 .post('/api/submit', this.info)
                 .then((response) => {
@@ -106,7 +109,7 @@ export default {
             { code: 'f230fh0g3', id: '1', value: '1000', inventoryStatus: 'Approved', date: '20/03/2023', action: '' },
             { code: 'zz21cz3c1', id: '4', value: '230', inventoryStatus: 'Denied', date: '20/03/2023', action: 'Confirmed' },
             { code: '244wgerg2', id: '67', value: '70', inventoryStatus: 'Approved', date: '20/03/2023', action: '' },
-            { code: 'av2231fwg', id: '1', value: '90', inventoryStatus: 'Pending', date: '20/03/2023', action: '' },
+            { code: 'av2231fwg', id: '1', value: '90', inventoryStatus: 'Pending', date: '20/03/2023', action: 'Denied' },
             { code: 'bib36pfvm', id: '1', value: '10', inventoryStatus: 'Denied', date: '20/03/2023', action: 'Confirmed' },
         ];
     },
