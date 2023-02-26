@@ -1,5 +1,5 @@
 <template>
-    <div class="login-body" style="justify-content: end;">
+    <div class="login-body" style="justify-content: end">
         <div>
             <div class="login-panel p-fluid">
                 <div class="flex flex-column">
@@ -24,7 +24,7 @@
                         </span>
                         <span class="p-input-icon-left">
                             <i class="pi pi-key"></i>
-                            <InputText type="password" placeholder="Confirm Password" v-model="userData.confirmPassword" />
+                            <InputText type="password" placeholder="Confirm Password" v-model="confirmPassword" />
                         </span>
                         <span class="p-input-icon-left">
                             <i class="pi pi-phone"></i>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="flex">
                         <div class="field-checkbox">
-                            <Checkbox inputId="binary" v-model="userData.checked" :binary="true" />
+                            <Checkbox inputId="binary" v-model="checked" :binary="true" />
                         </div>
                         <span style="font-weight: 500; color: gray">I accept the terms of use.</span>
                     </div>
@@ -57,41 +57,40 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     data() {
         return {
+            confirmPassword: '',
+            checked: false,
             disabled: true,
-
             userData: {
                 name: '',
                 email: '',
                 password: '',
-                confirmPassword: '',
                 phone: '',
-                checked: false,
             },
         };
     },
     methods: {
-        handleSubmit() {
-            if (this.userData.name && this.userData.email && this.userData.password && this.userData.confirmPassword && this.userData.phone) {
+        ...mapActions('auth', ['register']),
+        async handleSubmit() {
+            if (this.userData.name && this.userData.email && this.userData.password && this.confirmPassword && this.userData.phone) {
                 console.log(this.userData);
-                axios
-                    .post('/api/submit', this.userData)
-                    .then((response) => {
-                        console.log(response.data);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                try {
+                    await this.register(this.userData);
+                    this.$router.push(this.$route.query.redirect || '/');
+                } catch (error) {
+                    alert(error.menssage);
+                }
             } else {
                 console.log('Please fill all the fields');
             }
         },
     },
     computed: {
+        ...mapGetters('auth', ['isAuthenticated']),
         loginColor() {
             if (this.$appState.colorScheme === 'light') return 'ondark';
             return 'onlight';
@@ -101,7 +100,7 @@ export default {
             return 'light';
         },
         validFields() {
-            return this.userData.name.trim() === '' || this.userData.email.trim() === '' || this.userData.password.trim() === '' || this.userData.confirmPassword.trim() === '' || this.userData.phone.trim() === '' || this.userData.checked == false;
+            return this.userData.name.trim() === '' || this.userData.email.trim() === '' || this.userData.password.trim() === '' || this.confirmPassword.trim() === '' || this.userData.phone.trim() === '' || this.checked == false;
         },
     },
 };

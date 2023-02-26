@@ -321,14 +321,11 @@
 </template>
 <script>
 import axios from 'axios';
-
-import CountryService from '../service/CountryService';
-import NodeService from '../service/NodeService';
 export default {
     data() {
         return {
             dataQuestion: [],
-            riskprofile: true,
+            riskprofile: false,
             selectButtonValue1: 'Conservative',
             selectButtonValues1: [{ name: 'Conservative' }, { name: 'Moderate' }, { name: 'Audacious' }],
             profile: [
@@ -353,8 +350,6 @@ export default {
     countryService: null,
     nodeService: null,
     created() {
-        this.countryService = new CountryService();
-        this.nodeService = new NodeService();
     },
     mounted() {
         this.countryService.getCountries().then((data) => (this.autoValue = data));

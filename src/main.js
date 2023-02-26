@@ -97,10 +97,11 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import 'prismjs/themes/prism-coy.css';
 import './assets/demo/flags/flags.css';
+import store from './store'
 
 const app = createApp({
     render () { return h(AppWrapper); }
-});
+}).use(store);
 
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);

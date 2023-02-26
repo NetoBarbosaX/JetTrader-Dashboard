@@ -1,5 +1,5 @@
 <template>
-    <div class="login-body" style="justify-content: end;">
+    <div class="login-body" style="justify-content: end">
         <div>
             <div class="login-panel p-fluid">
                 <div class="flex flex-column">
@@ -19,7 +19,7 @@
                         <a href="/forgotPassword" class="flex">Forgot your password?</a>
                     </div>
                     <div class="button-container">
-                        <Button :disabled="validFields" type="button" @click="login" label="Login"></Button>
+                        <Button :disabled="validFields" type="button" @click="processLogin" label="Login"></Button>
                         <span>Don’t have an account?<a href="/register">Sign-up here</a></span>
                     </div>
                 </div>
@@ -37,8 +37,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 
-import axios from 'axios';
 export default {
     data() {
         return {
@@ -49,19 +49,18 @@ export default {
         };
     },
     methods: {
-        login() {
-            console.log(this.userData);
-            axios
-                .post('/api/submit', this.userData)
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        ...mapActions('auth', ['login']),
+        async processLogin() {
+            try {
+                await this.login(this.userData);
+                this.$router.push(this.$route.query.redirect || '/');
+            } catch (error) {
+                alert(error);
+            }
         },
     },
     computed: {
+        ...mapGetters('auth', ['isAuthenticated']),
         loginColor() {
             if (this.$appState.colorScheme === 'light') return 'ondark';
             return 'onlight';
@@ -78,7 +77,7 @@ export default {
 </script>
 
 <style>
-.login-body{
+.login-body {
     height: 100vh;
     background-image: url('@/assets/background.svg');
 }

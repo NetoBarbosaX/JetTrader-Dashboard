@@ -2,7 +2,7 @@
     <div class="grid">
         <div class="col-12 md:col-12">
             <div class="card">
-                <h5>Row Editing</h5>
+                <h5>Users Info</h5>
                 <DataTable :value="editTable.data" editMode="row" dataKey="id" v-model:editingRows="editingRows" @row-edit-save="onRowEditSave" responsiveLayout="scroll">
                     <Column field="username" header="Name" style="width: 20%"> </Column>
                     <Column field="plan" header="Plan" style="width: 20%"> </Column>

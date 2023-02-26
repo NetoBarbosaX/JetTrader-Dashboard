@@ -141,7 +141,7 @@
                                     <i class="pi pi-arrow-down"></i>
                                     <span>0.6%</span>
                                 </div>
-                                <div class="overview-text">{{ accountBot[index].bot.amount }}</div>
+                                <div class="overview-text">${{ accountBot[index].bot.amount }}</div>
                             </div>
                         </div>
                         <img src="layout/images/dashboard/rate.svg" />
@@ -154,7 +154,7 @@
                                     <i class="pi pi-arrow-up"></i>
                                     <span>4,2%</span>
                                 </div>
-                                <div class="overview-text">{{ accountBot[index].bot.amount }}</div>
+                                <div class="overview-text">${{ accountBot[index].bot.amount }}</div>
                             </div>
 
                             <img src="layout/images/dashboard/value.svg" />
@@ -168,7 +168,7 @@
                                     <i class="pi pi-arrow-down"></i>
                                     <span>0.6%</span>
                                 </div>
-                                <div class="overview-text">{{ accountBot[index].bot.daily }}</div>
+                                <div class="overview-text">${{ accountBot[index].bot.daily }}</div>
                             </div>
                         </div>
                         <img src="layout/images/dashboard/rate.svg" />
@@ -181,7 +181,7 @@
                                     <i class="pi pi-arrow-up"></i>
                                     <span>4,2%</span>
                                 </div>
-                                <div class="overview-text">{{ accountBot[index].bot.daily }}</div>
+                                <div class="overview-text">${{ accountBot[index].bot.daily }}</div>
                             </div>
 
                             <img src="layout/images/dashboard/value.svg" />
@@ -196,7 +196,7 @@
                                     <i class="pi pi-arrow-down"></i>
                                     <span>0.6%</span>
                                 </div>
-                                <div class="overview-text">{{ accountBot[index].bot.accumulatedGain }}</div>
+                                <div class="overview-text">${{ accountBot[index].bot.accumulatedGain }}</div>
                             </div>
                         </div>
                         <img src="layout/images/dashboard/rate.svg" />
@@ -210,7 +210,7 @@
                                     <i class="pi pi-arrow-up"></i>
                                     <span>4,2%</span>
                                 </div>
-                                <div class="overview-text">{{ accountBot[index].bot.accumulatedGain }}</div>
+                                <div class="overview-text">${{ accountBot[index].bot.accumulatedGain }}</div>
                             </div>
 
                             <img src="layout/images/dashboard/value.svg" />
@@ -271,6 +271,7 @@
 <script>
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import DASHBOARD from '@/service/dashboard';
 import axios from 'axios';
 
 export default {
@@ -282,43 +283,55 @@ export default {
                 id: '',
                 hash: '',
             },
-            accountBot: [
-                {
-                    id: '4542',
-                    value: '308.2',
-                    percent: '4.2',
-                    bot: {
-                        id: '4542',
-                        amount: '308.2',
-                        daily: '-0.6',
-                        accumulatedGain: '12',
-                        accumulatedEarnings: '120',
-                        percent: '4.2',
-                        hash: '',
-                    },
-                },
-                {
-                    id: '111',
-                    value: '308.2',
-                    percent: '4.2',
-                    bot: {
-                        id: '111',
-                        amount: '308.2',
-                        daily: '-0.6',
-                        accumulatedGain: '12',
-                        accumulatedEarnings: '120',
-                        percent: '4.2',
-                        hash: '',
-                    },
-                },
-            ],
+            accountBot: [],
+            // accountBot: [
+            //     {
+            //         id: '4542',
+            //         value: '308.2',
+            //         percent: '4.2',
+            //         bot: {
+            //             id: '4542',
+            //             amount: '308.2',
+            //             daily: '-0.6',
+            //             accumulatedGain: '12',
+            //             accumulatedEarnings: '120',
+            //             percent: '4.2',
+            //             hash: '',
+            //         },
+            //     },
+            //     {
+            //         id: '111',
+            //         value: '308.2',
+            //         percent: '4.2',
+            //         bot: {
+            //             id: '111',
+            //             amount: '308.2',
+            //             daily: '-0.6',
+            //             accumulatedGain: '12',
+            //             accumulatedEarnings: '120',
+            //             percent: '4.2',
+            //             hash: '',
+            //         },
+            //     },
+            // ],
             link: 'https://www.hfm.com/?refid=364649',
         };
     },
     created() {},
-    mounted() {},
+    mounted() {
+        this.getAccountBot();
+    },
     computed: {},
     methods: {
+        async getAccountBot() {
+            try {
+                const response = await DASHBOARD.getData();
+                this.accountBot = response.data;
+            } catch (error) {
+                alert(error);
+            }
+        },
+
         confirm1(event, id, hash) {
             this.paymentInfo.id = id;
             this.paymentInfo.hash = hash;
