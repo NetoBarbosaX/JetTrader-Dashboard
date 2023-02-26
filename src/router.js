@@ -7,7 +7,7 @@ const routes = [
         path: '/',
         name: 'app',
         component: Dashboard,
-        beforeEnter: authenticated,
+        beforeEnter: authenticated(),
         meta: {},
         children: [
             {
@@ -30,6 +30,7 @@ const routes = [
     {
         path: '/verification',
         name: 'verification',
+        beforeEnter: authenticated({ skipEmail: true }),
         component: () => import('./pages/Verification.vue'),
     },
     {
@@ -45,55 +46,55 @@ const routes = [
     {
         path: '/editProfile',
         name: 'editProfile',
-        beforeEnter: authenticated,
+        beforeEnter: authenticated(),
         component: () => import('./pages/EditProfile.vue'),
     },
     {
         path: '/riskProfile',
         name: 'riskProfile',
-        beforeEnter: authenticated,
+        beforeEnter: authenticated(),
         component: () => import('./pages/RiskProfile.vue'),
     },
     {
         path: '/registerMT4',
         name: 'registerMT4',
-        beforeEnter: authenticated,
+        beforeEnter: authenticated(),
         component: () => import('./pages/RegisterMT4.vue'),
     },
     {
         path: '/payments',
         name: 'payments',
-        beforeEnter: authenticated,
+        beforeEnter: authenticated(),
         component: () => import('./pages/Payments.vue'),
     },
     {
         path: '/tickets',
         name: 'tickets',
-        beforeEnter: authenticated,
+        beforeEnter: authenticated(),
         component: () => import('./pages/Tickets.vue'),
     },
     {
         path: '/dashboardAdmin',
         name: 'dashboardAdmin',
-        beforeEnter: authenticated,
+        beforeEnter: authenticated(),
         component: () => import('./PagesAdmin/DashboardAdmin.vue'),
     },
     {
         path: '/usersAdmin',
         name: 'usersAdmin',
-        beforeEnter: authenticated,
+        beforeEnter: authenticated(),
         component: () => import('./PagesAdmin/UsersAdmin.vue'),
     },
     {
         path: '/finance',
         name: 'finance',
-        beforeEnter: authenticated,
+        beforeEnter: authenticated(),
         component: () => import('./PagesAdmin/Finance.vue'),
     },
     {
         path: '/activatePlan',
         name: 'activatePlan',
-        beforeEnter: authenticated,
+        beforeEnter: authenticated(),
         component: () => import('./PagesAdmin/ActivatePlan.vue'),
     },
 ];

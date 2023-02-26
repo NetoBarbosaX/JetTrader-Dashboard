@@ -17,9 +17,7 @@
                         aria-label="Tabable Primary Tag"
                         tabindex="0"
                     ></Tag>
-                    <router-link to="/login">
-                        <Button type="button" label="Continue"></Button>
-                    </router-link>
+                    <Button @click="processLogout" type="button" label="Continue"></Button>
                 </div>
             </div>
 
@@ -35,6 +33,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     data() {
         return {
@@ -50,6 +50,20 @@ export default {
         color() {
             if (this.$appState.colorScheme === 'light') return 'dark';
             return 'light';
+        },
+    },
+    methods: {
+        ...mapActions('auth', ['logout']),
+        async processLogout() {
+            try {
+                await this.logout();
+                this.redirect();
+            } catch (error) {
+                alert(error);
+            }
+        },
+        redirect() {
+            this.$router.push('/login');
         },
     },
 };

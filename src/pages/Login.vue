@@ -53,11 +53,17 @@ export default {
         async processLogin() {
             try {
                 await this.login(this.userData);
-                this.$router.push(this.$route.query.redirect || '/');
+                this.redirect();
             } catch (error) {
                 alert(error);
             }
         },
+        redirect() {
+            this.$router.push(this.$route.query.redirect || '/');
+        },
+    },
+    mounted() {
+        if (this.isAuthenticated) this.redirect();
     },
     computed: {
         ...mapGetters('auth', ['isAuthenticated']),

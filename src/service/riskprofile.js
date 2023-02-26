@@ -1,8 +1,10 @@
 import http from '../http-common';
 
-const getData = async () => {
+const sendData = async (data) => {
     return await http
-        .get('/dashboard')
+        .post('/auth', {
+            dataQuestion : data,
+        })
         .then((r) => r.data)
         .catch((error) => {
             throw error.response?.data || error.response || error;
@@ -10,5 +12,5 @@ const getData = async () => {
 };
 
 export default {
-    getData,
+    sendData,
 };

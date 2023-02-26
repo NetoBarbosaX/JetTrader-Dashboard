@@ -256,10 +256,10 @@
                                 style="background: rgb(11, 209, 138); border: none; width: 90px"
                                 @click="confirm1($event, accountBot[index].bot.id)"
                                 icon="pi pi-check"
-                                label="Pay $"
+                                label=""
                                 class="mr-2"
                             ></Button>
-                            <Button v-else style="background: rgb(11, 209, 138); border: none; width: 90px" @click="confirm1($event, accountBot[index].bot.id, accountBot[index].bot.hash)" icon="pi pi-check" label="Pay $" class="mr-2"></Button>
+                            <Button v-else style="background: rgb(11, 209, 138); border: none; width: 90px" @click="confirm1($event, accountBot[index].bot.id, accountBot[index].bot.hash)" icon="pi pi-check" label="" class="mr-2"></Button>
                         </div>
                     </div>
                 </div>

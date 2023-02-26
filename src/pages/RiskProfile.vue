@@ -320,7 +320,8 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
+import RIKSPROFILE from '@/service/riskprofile.js';
+
 export default {
     data() {
         return {
@@ -349,12 +350,8 @@ export default {
     },
     countryService: null,
     nodeService: null,
-    created() {
-    },
-    mounted() {
-        this.countryService.getCountries().then((data) => (this.autoValue = data));
-        this.nodeService.getTreeNodes().then((data) => (this.treeSelectNodes = data));
-    },
+    created() {},
+    mounted() {},
     methods: {
         searchCountry(event) {
             setTimeout(() => {
@@ -368,17 +365,10 @@ export default {
             }, 250);
         },
 
-        handleSubmit() {
+        async handleSubmit() {
             console.log(this.dataQuestion);
-            (this.riskprofile = true),
-                axios
-                    .post('/api/submit', this.dataQuestion)
-                    .then((response) => {
-                        console.log(response.data);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+            (this.riskprofile = true), await RIKSPROFILE.sendData(this.dataQuestion);
+            console.log(this.dataQuestion);
         },
         confirm1() {
             this.$confirm.require({

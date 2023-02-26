@@ -1,7 +1,7 @@
 <template>
     <div :class="['layout-inline-menu', { 'layout-inline-menu-active': activeInlineProfile }]" v-if="!isMobile() && (isStatic() || isSlim() || isSidebar())">
         <a class="layout-inline-menu-action" @click="onChangeActiveInlineMenu">
-            <span class="layout-inline-menu-text">{{user.name}}</span>
+            <span class="layout-inline-menu-text">{{ user?.name }}</span>
             <i class="layout-inline-menu-icon pi pi-angle-down"></i>
         </a>
 
@@ -27,51 +27,52 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-	export default {
-        name: 'AppInlineMenu',
-        emits: ['change-inlinemenu'],
-        props: {
-            menuMode: String,
-            activeInlineProfile: {
-                type: Boolean,
-                default: false
-            }
+export default {
+    name: 'AppInlineMenu',
+    emits: ['change-inlinemenu'],
+    props: {
+        menuMode: String,
+        activeInlineProfile: {
+            type: Boolean,
+            default: false,
         },
-        methods: {
-            ...mapActions('auth', ['logout']),
-            processLogout() {
-                this.logout();
-                this.$router.push('/login');
-            },
-            onChangeActiveInlineMenu(event) {
-                this.$emit('change-inlinemenu', event);
-                event.preventDefault();
-            },
-            isHorizontal() {
-                return this.menuMode === 'horizontal';
-            },
-            isSlim() {
-                return this.menuMode === 'slim';
-            },
-            isOverlay() {
-                return this.menuMode === 'overlay';
-            },
-            isStatic() {
-                return this.menuMode === 'static';
-            },
-            isSidebar() {
-                return this.menuMode === 'sidebar';
-            },
-            isDesktop() {
-                return window.innerWidth > 991;
-            },
-            isMobile() {
-                return window.innerWidth <= 991;
-            }
+    },
+    methods: {
+        ...mapActions('auth', ['logout']),
+        processLogout() {
+            this.logout();
+            this.$router.push('/login');
         },
-        computed:{
-            ...mapGetters('auth', ['user'])}
-	}
+        onChangeActiveInlineMenu(event) {
+            this.$emit('change-inlinemenu', event);
+            event.preventDefault();
+        },
+        isHorizontal() {
+            return this.menuMode === 'horizontal';
+        },
+        isSlim() {
+            return this.menuMode === 'slim';
+        },
+        isOverlay() {
+            return this.menuMode === 'overlay';
+        },
+        isStatic() {
+            return this.menuMode === 'static';
+        },
+        isSidebar() {
+            return this.menuMode === 'sidebar';
+        },
+        isDesktop() {
+            return window.innerWidth > 991;
+        },
+        isMobile() {
+            return window.innerWidth <= 991;
+        },
+    },
+    computed: {
+        ...mapGetters('auth', ['user']),
+    },
+};
 </script>
 
 <style scoped></style>

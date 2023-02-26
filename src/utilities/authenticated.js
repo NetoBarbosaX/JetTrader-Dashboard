@@ -1,6 +1,6 @@
 import store from "../store";
 
-export default (to, from, next) => {
+export default (options) => (to, from, next) => {
   if (!store.getters["auth/isAuthenticated"]) {
     return next({
       path: "/login",
@@ -8,5 +8,11 @@ export default (to, from, next) => {
     });
   }
 
+  if (!store.getters["auth/user"].validateEmail && !options?.skipEmail) {
+    return next({
+      path: "/verification",
+      query: { redirect: to.fullPath },
+    });
+  }
   next();
 };
