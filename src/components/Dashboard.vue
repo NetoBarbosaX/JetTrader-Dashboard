@@ -161,7 +161,7 @@
                         </div>
                     </div>
                     <div v-if="accountBot[index].bot.daily.substr(0, 1) == '-'" style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-1">
-                        <span class="overview-title"> Daily Profit </span>
+                        <span class="overview-title"> Daily Result </span>
                         <div class="flex justify-content-between">
                             <div class="overview-detail flex justify-content-between">
                                 <div class="overview-badge flex justify-content-center align-items-center">
@@ -174,7 +174,7 @@
                         <img src="layout/images/dashboard/rate.svg" />
                     </div>
                     <div v-else style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-2">
-                        <span class="overview-title"> Daily Profit </span>
+                        <span class="overview-title"> Daily Result </span>
                         <div class="flex justify-content-between">
                             <div class="overview-detail flex justify-content-between">
                                 <div class="overview-badge flex justify-content-center align-items-center">
@@ -188,29 +188,29 @@
                         </div>
                     </div>
 
-                    <div v-if="accountBot[index].bot.accumulatedGain.substr(0, 1) == '-'" style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-1">
-                        <span class="overview-title"> Accumulated Gain </span>
+                    <div v-if="accountBot[index].bot.accumulatedResult.substr(0, 1) == '-'" style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-1">
+                        <span class="overview-title"> Accumulated Result </span>
                         <div class="flex justify-content-between">
                             <div class="overview-detail flex justify-content-between">
                                 <div class="overview-badge flex justify-content-center align-items-center">
                                     <i class="pi pi-arrow-down"></i>
                                     <span>0.6%</span>
                                 </div>
-                                <div class="overview-text">${{ accountBot[index].bot.accumulatedGain }}</div>
+                                <div class="overview-text">${{ accountBot[index].bot.accumulatedResult }}</div>
                             </div>
                         </div>
                         <img src="layout/images/dashboard/rate.svg" />
                     </div>
 
                     <div v-else style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-2">
-                        <span class="overview-title"> Accumulated Gain </span>
+                        <span class="overview-title"> Accumulated Result </span>
                         <div class="flex justify-content-between">
                             <div class="overview-detail flex justify-content-between">
                                 <div class="overview-badge flex justify-content-center align-items-center">
                                     <i class="pi pi-arrow-up"></i>
                                     <span>4,2%</span>
                                 </div>
-                                <div class="overview-text">${{ accountBot[index].bot.accumulatedGain }}</div>
+                                <div class="overview-text">${{ accountBot[index].bot.accumulatedResult }}</div>
                             </div>
 
                             <img src="layout/images/dashboard/value.svg" />

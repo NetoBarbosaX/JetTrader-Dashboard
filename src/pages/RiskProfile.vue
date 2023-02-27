@@ -1,5 +1,5 @@
 <template>
-    <div v-if="riskprofile == false" class="grid p-fluid">
+    <div v-if="riskprofile.quiz == ''" class="grid p-fluid">
         <div class="col-12 md:col-12">
             <h2>Risk Profile Question</h2>
             <h5>What is your long-term goal regarding the use of Jet Trader's services?</h5>
@@ -229,7 +229,7 @@
         </div>
         <Button :disabled="validFields" @click="handleSubmit" label="Submit" />
     </div>
-    <div v-else class="grid p-fluid">
+    <div v-else class="grid p-fluid" style="justify-content: end">
         <div class="col-12 md:col-12">
             <h2>Risk Profile</h2>
             <div class="card grid" style="justify-content: space-between">
@@ -301,22 +301,22 @@
                     </div>
                 </div>
             </div>
-            <SelectButton v-model="selectButtonValue1" :options="selectButtonValues1" optionLabel="name" />
+            <SelectButton v-model="riskprofile.type" :options="selectButtonValues1" optionLabel="name" />
         </div>
-    </div>
-    <div style="text-align-last: end">
-        <Toast />
-        <ConfirmDialog></ConfirmDialog>
-        <ConfirmDialog group="templating">
-            <template #message="slotProps">
-                <div class="flex p-4">
-                    <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
-                    <p class="pl-2">{{ slotProps.message.message }}</p>
-                </div>
-            </template>
-        </ConfirmDialog>
-        <ConfirmDialog group="positionDialog"></ConfirmDialog>
-        <Button @click="confirm1()" icon="pi pi-check" label="Confirm" style="padding: 10px; padding-right: 40px; padding-left: 40px" class="mr-2"></Button>
+        <div style="text-align-last: end">
+            <Toast />
+            <ConfirmDialog></ConfirmDialog>
+            <ConfirmDialog group="templating">
+                <template #message="slotProps">
+                    <div class="flex p-4">
+                        <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
+                        <p class="pl-2">{{ slotProps.message.message }}</p>
+                    </div>
+                </template>
+            </ConfirmDialog>
+            <ConfirmDialog group="positionDialog"></ConfirmDialog>
+            <Button @click="confirm1()" icon="pi pi-check" label="Confirm" style="padding: 10px; padding-right: 40px; padding-left: 40px" class="mr-2"></Button>
+        </div>
     </div>
 </template>
 <script>
@@ -326,9 +326,11 @@ export default {
     data() {
         return {
             dataQuestion: [],
-            riskprofile: false,
-            selectButtonValue1: 'Conservative',
-            selectButtonValues1: [{ name: 'Conservative' }, { name: 'Moderate' }, { name: 'Audacious' }],
+            riskprofile: {
+                quiz: 'a',
+                type: '',
+            },
+            selectButtonValues1: [{ name: 'Conservative' }, { name: 'Moderate' }, { name: 'Agressive' }],
             profile: [
                 {
                     name: 'Conservative',
@@ -341,7 +343,7 @@ export default {
                     info: 'The moderate profile is considered an intermediate level in terms of risk. These people take higher risks than the conservative, but in the face of signs of market vulnerability, they return to safer investments, which represent their comfort zone. Investors with this profile have a preference for balanced investments in fixed and variable income, that is, they invest 50% in fixed income and 50% in variable income, seeking the highest possible return. They strive for higher returns without having to take very high risks. Thus, they make up a well-diversified portfolio, investing in CDBs, Treasury Direct, Private Pension and, occasionally, in shares of some companies.',
                 },
                 {
-                    name: 'Audacious',
+                    name: 'Agressive',
                     code: 'O3',
                     info: 'Investors known as daring or aggressive prefer to invest in variable income (stocks, foreign currencies, real estate funds), seeking the highest rate of return. They accept negative returns thinking of having a higher return in the long term. Despite dealing well with risk, the daring have knowledge and control of their assets, that is, they incur higher, but calculated risks. This type of investor usually has a lot of knowledge in the capital market area, and also has more time than the other types to keep up with the market dynamics and adjust their portfolio.',
                 },
@@ -353,16 +355,14 @@ export default {
     created() {},
     mounted() {},
     methods: {
-        searchCountry(event) {
-            setTimeout(() => {
-                if (!event.query.trim().length) {
-                    this.autoFilteredValue = [...this.autoValue];
-                } else {
-                    this.autoFilteredValue = this.autoValue.filter((country) => {
-                        return country.name.toLowerCase().startsWith(event.query.toLowerCase());
-                    });
-                }
-            }, 250);
+        async getRiskProfile() {
+            try {
+                const response = await RIKSPROFILE.getForm();
+                this.accountBot.quiz = response.data.quiz;
+                this.accountBot.type = response.data.type;
+            } catch (error) {
+                alert(error);
+            }
         },
 
         async handleSubmit() {
@@ -370,6 +370,13 @@ export default {
             (this.riskprofile = true), await RIKSPROFILE.sendData(this.dataQuestion);
             console.log(this.dataQuestion);
         },
+
+        async processProfile() {
+            console.log(this.dataQuestion);
+            (this.riskprofile = true), await RIKSPROFILE.sendData(this.dataQuestion);
+            console.log(this.dataQuestion);
+        },
+
         confirm1() {
             this.$confirm.require({
                 message: 'Are you sure you want to proceed?',
