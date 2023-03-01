@@ -3,7 +3,7 @@ import http from '../http-common';
 const sendData = async (data) => {
     return await http
         .post('/auth', {
-            dataQuestion : data,
+            dataQuestion: data,
         })
         .then((r) => r.data)
         .catch((error) => {
@@ -23,7 +23,7 @@ const getForm = async () => {
 const changeProfile = async (data) => {
     return await http
         .post('/auth', {
-            dataQuestion : data,
+            dataQuestion: data,
         })
         .then((r) => r.data)
         .catch((error) => {

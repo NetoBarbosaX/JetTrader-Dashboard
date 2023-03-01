@@ -100,7 +100,7 @@
 <script>
 import 'vue3-toastify/dist/index.css';
 import DASHBOARD from '@/service/dashboard';
-
+import { mapGetters } from 'vuex';
 import AccountCard from './Dashboard/AccountCard.vue';
 import AccountCardFull from './Dashboard/AccountCardFull.vue';
 
@@ -110,6 +110,7 @@ export default {
         return {
             index: 0,
             wallet: '0x89566A6aa1943a6FDb178367229E132B51F6B343',
+            userPlans: [],
             paymentInfo: {
                 id: '',
                 hash: '',
@@ -165,13 +166,25 @@ export default {
     created() {},
     mounted() {
         // this.getAccountBot();
+        this.getUserInfo();
     },
-    computed: {},
+    computed: {
+        ...mapGetters('auth', ['user']),
+    },
     methods: {
         async getAccountBot() {
             try {
                 const response = await DASHBOARD.getData();
                 this.accountBots = response.data;
+            } catch (error) {
+                alert(error);
+            }
+        },
+        async getUserInfo(uuid) {
+            try {
+                const response = await DASHBOARD.getPlans(uuid);
+                this.userPlans = response.data;
+                console.log(this.userPlans);
             } catch (error) {
                 alert(error);
             }
