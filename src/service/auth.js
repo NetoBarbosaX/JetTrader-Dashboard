@@ -2,9 +2,9 @@ import http from '../http-common';
 
 const login = async (data) => {
     return await http
-        .post('/auth', {
+        .post('/account/login', {
             email: data.email,
-            password: data.password 
+            password: data.password,
         })
         .then((r) => r.data)
         .catch((error) => {
@@ -14,7 +14,7 @@ const login = async (data) => {
 
 const register = async (data) => {
     return await http
-        .post('/auth/register', {
+        .post('/account/create', {
             ...data,
             password: data.password,
         })
@@ -23,8 +23,6 @@ const register = async (data) => {
             throw error.response?.data || error.response || error;
         });
 };
-
-
 
 // Reset password
 const rpRequestToken = async ({ phone }) => {
@@ -42,15 +40,13 @@ const rpReadToken = async (token) => {
     return await http
 
         .get(`/auth/reset-password/${token}`, {
-            headers: {
-            },
+            headers: {},
         })
         .then((r) => r.data)
         .catch((error) => {
             throw error.response?.data || error.response || error;
         });
 };
-
 
 export default {
     login,

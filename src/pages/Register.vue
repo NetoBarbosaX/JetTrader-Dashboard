@@ -28,7 +28,7 @@
                         </span>
                         <span class="p-input-icon-left">
                             <i class="pi pi-phone"></i>
-                            <InputText type="phone" placeholder="Phone" v-model="userData.phone" />
+                            <InputText type="phone" placeholder="Phone" v-model="userData.cellphone" />
                         </span>
                     </div>
                     <div class="flex">
@@ -69,18 +69,18 @@ export default {
                 name: '',
                 email: '',
                 password: '',
-                phone: '',
+                cellphone: '',
             },
         };
     },
     methods: {
         ...mapActions('auth', ['register']),
         async handleSubmit() {
-            if (this.userData.name && this.userData.email && this.userData.password && this.confirmPassword && this.userData.phone) {
+            if (!this.validFields) {
                 console.log(this.userData);
                 try {
                     await this.register(this.userData);
-                    this.$router.push(this.$route.query.redirect || '/');
+                    this.$router.push('/verification');
                 } catch (error) {
                     alert(error.menssage);
                 }
@@ -100,7 +100,7 @@ export default {
             return 'light';
         },
         validFields() {
-            return this.userData.name.trim() === '' || this.userData.email.trim() === '' || this.userData.password.trim() === '' || this.confirmPassword.trim() === '' || this.userData.phone.trim() === '' || this.checked == false;
+            return this.userData.name.trim() === '' || this.userData.email.trim() === '' || this.userData.password.trim() === '' || this.confirmPassword.trim() === '' || this.userData.cellphone.trim() === '' || this.checked == false;
         },
     },
 };

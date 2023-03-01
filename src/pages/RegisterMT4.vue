@@ -8,19 +8,23 @@
                 <h5>New Account</h5>
                 <div class="field">
                     <label for="name1"> Account Name</label>
-                    <InputText placeholder="Name" id="name1" type="text" v-model="userDataMT4.name" />
+                    <InputText placeholder="Name" id="name1" type="text" v-model="userDataMT4.profile" />
                 </div>
                 <div class="field">
                     <label for="name1">Trading Account Number (ID)</label>
-                    <InputText placeholder="User ID" id="name1" type="text" v-model="userDataMT4.tradeId" />
+                    <InputText placeholder="User ID" id="name1" type="text" v-model="userDataMT4.accountId" />
                 </div>
                 <div class="field">
                     <label for="email1">Trading password</label>
-                    <InputText placeholder="Password" id="email1" type="text" v-model="userDataMT4.tradePassword" />
+                    <InputText placeholder="Password" id="email1" type="text" v-model="userDataMT4.accountPassword" />
                 </div>
                 <div class="field">
                     <label for="email1">Server</label>
-                    <InputText placeholder="Server" id="Chain" type="text" v-model="userDataMT4.server" />
+                    <InputText placeholder="Server" id="Chain" type="text" v-model="userDataMT4.accountAddress" />
+                </div>
+                <div class="field">
+                    <label for="email1">Amount</label>
+                    <InputText placeholder="Server" id="Chain" type="text" v-model="userDataMT4.amount" />
                 </div>
                 <div style="text-align: center">
                     <Button :disabled="validFields" @click="handleSubmit" style="width: 25%" label="Create"></Button>
@@ -43,7 +47,7 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
+import MT4 from '@/service/mt4.js';
 
 export default {
     data() {
@@ -58,10 +62,11 @@ export default {
                 confirmPassword: 'adsadadasd',
             },
             userDataMT4: {
-                name: '',
-                tradeId: '',
-                tradePassword: '',
-                server: '',
+                profile: '',
+                amount: '',
+                accountId: '',
+                accountPassword: '',
+                accountAddress: '',
             },
             dropdownItems: [
                 { name: 'Option 1', code: 'Option 1' },
@@ -72,16 +77,18 @@ export default {
         };
     },
     methods: {
-        handleSubmit() {
+        async handleSubmit() {
             console.log(this.userDataMT4);
-            axios
-                .post('/api/submit', this.userDataMT4)
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            if (!this.validFields) {
+                console.log(this.userDataMT4);
+                try {
+                    await MT4.create(this.userDataMT4);
+                } catch (error) {
+                    alert(error.menssage);
+                }
+            } else {
+                console.log('Please fill all the fields');
+            }
         },
         toggleDisabled() {
             this.disabled = !this.disabled;
@@ -106,7 +113,7 @@ export default {
     },
     computed: {
         validFields() {
-            return this.userDataMT4.name.trim() === '' || this.userDataMT4.tradeId.trim() === '' || this.userDataMT4.tradePassword.trim() === '' || this.userDataMT4.server.trim() === '';
+            return this.userDataMT4.profile.trim() === '' || this.userDataMT4.accountId.trim() === '' || this.userDataMT4.accountPassword.trim() === '' || this.userDataMT4.accountAddress.trim() === '';
         },
     },
 };

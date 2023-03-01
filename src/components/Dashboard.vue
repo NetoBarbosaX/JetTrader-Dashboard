@@ -82,186 +82,15 @@
             <div class="col-12 md:col-12">
                 <h3>Active Accounts - MT4</h3>
             </div>
-            <div v-for="(accountBots, index) in accountBot" :key="accountBots.id" class="col-12 md:col-4">
-                <div v-if="accountBot[index].value.substr(0, 1) != '-'" class="card widget-overview-box widget-overview-box-2">
-                    <span class="overview-title">Account {{ accountBot[index].id }}</span>
-                    <div class="flex justify-content-between">
-                        <div class="overview-detail flex justify-content-between">
-                            <div class="overview-badge flex justify-content-center align-items-center">
-                                <i class="pi pi-arrow-up"></i>
-                                <span>{{ accountBot[index].percent }}%</span>
-                            </div>
-                            <div class="overview-text">${{ accountBot[index].value }}</div>
-                        </div>
-                    </div>
-                    <img src="layout/images/dashboard/value.svg" />
-                </div>
-
-                <div v-else-if="accountBot[index].value.substr(0, 1) == '0'" class="card widget-overview-box widget-overview-box-3">
-                    <span class="overview-title"> Account {{ accountBot[index].id }}</span>
-                    <div class="flex justify-content-between">
-                        <div class="overview-detail flex justify-content-between">
-                            <div class="overview-badge flex justify-content-center align-items-center">
-                                <i class="pi pi-minus"></i>
-                                <span>{{ accountBot[index].percent }}%</span>
-                            </div>
-                            <div class="overview-text">${{ accountBot[index].value }}</div>
-                        </div>
-                    </div>
-                    <img src="layout/images/dashboard/quantity.svg" />
-                </div>
-
-                <div v-else class="card widget-overview-box widget-overview-box-1">
-                    <span class="overview-title">Account {{ accountBot[index].id }}</span>
-                    <div class="flex justify-content-between">
-                        <div class="overview-detail flex justify-content-between">
-                            <div class="overview-badge flex justify-content-center align-items-center">
-                                <i class="pi pi-arrow-down"></i>
-                                <span>{{ accountBot[index].percent }}%</span>
-                            </div>
-                            <div class="overview-text">${{ accountBot[index].value }}</div>
-                        </div>
-                    </div>
-                    <img src="layout/images/dashboard/rate.svg" />
-                </div>
+            <div v-for="accountBot in accountBots" :key="accountBot.id" class="col-12 md:col-4">
+                <account-card :accountBot="accountBot"></account-card>
             </div>
             <div class="col-12 md:col-12">
                 <h3>Outstanding Payments - MT4</h3>
             </div>
             <div class="col-12 md:col-12">
-                <div v-for="(accountBots, index) in accountBot" :key="accountBots.bot" class="grid">
-                    <div class="col-12 md:col-3 sm:col-3" style="width: 100%; margin-bottom: 11px; background-color: rgb(11, 209, 138); box-shadow: rgb(11 209 138 / 30%) 0px 6px 20px; border-radius: 8px; padding: 11px; align-self: center">
-                        {{ accountBot[index].bot.id }}
-                    </div>
-                    <div v-if="accountBot[index].bot.amount.substr(0, 1) == '-'" style="border-radius: 0px" class="col-12 md:col-4 sm:col-4 card widget-overview-box widget-overview-box-1">
-                        <span class="overview-title"> Amount </span>
-                        <div class="flex justify-content-between">
-                            <div class="overview-detail flex justify-content-between">
-                                <div class="overview-badge flex justify-content-center align-items-center">
-                                    <i class="pi pi-arrow-down"></i>
-                                    <span>0.6%</span>
-                                </div>
-                                <div class="overview-text">${{ accountBot[index].bot.amount }}</div>
-                            </div>
-                        </div>
-                        <img src="layout/images/dashboard/rate.svg" />
-                    </div>
-                    <div v-else style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-2">
-                        <span class="overview-title"> Amount </span>
-                        <div class="flex justify-content-between">
-                            <div class="overview-detail flex justify-content-between">
-                                <div class="overview-badge flex justify-content-center align-items-center">
-                                    <i class="pi pi-arrow-up"></i>
-                                    <span>4,2%</span>
-                                </div>
-                                <div class="overview-text">${{ accountBot[index].bot.amount }}</div>
-                            </div>
-
-                            <img src="layout/images/dashboard/value.svg" />
-                        </div>
-                    </div>
-                    <div v-if="accountBot[index].bot.daily.substr(0, 1) == '-'" style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-1">
-                        <span class="overview-title"> Daily Result </span>
-                        <div class="flex justify-content-between">
-                            <div class="overview-detail flex justify-content-between">
-                                <div class="overview-badge flex justify-content-center align-items-center">
-                                    <i class="pi pi-arrow-down"></i>
-                                    <span>0.6%</span>
-                                </div>
-                                <div class="overview-text">${{ accountBot[index].bot.daily }}</div>
-                            </div>
-                        </div>
-                        <img src="layout/images/dashboard/rate.svg" />
-                    </div>
-                    <div v-else style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-2">
-                        <span class="overview-title"> Daily Result </span>
-                        <div class="flex justify-content-between">
-                            <div class="overview-detail flex justify-content-between">
-                                <div class="overview-badge flex justify-content-center align-items-center">
-                                    <i class="pi pi-arrow-up"></i>
-                                    <span>4,2%</span>
-                                </div>
-                                <div class="overview-text">${{ accountBot[index].bot.daily }}</div>
-                            </div>
-
-                            <img src="layout/images/dashboard/value.svg" />
-                        </div>
-                    </div>
-
-                    <div v-if="accountBot[index].bot.accumulatedResult.substr(0, 1) == '-'" style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-1">
-                        <span class="overview-title"> Accumulated Result </span>
-                        <div class="flex justify-content-between">
-                            <div class="overview-detail flex justify-content-between">
-                                <div class="overview-badge flex justify-content-center align-items-center">
-                                    <i class="pi pi-arrow-down"></i>
-                                    <span>0.6%</span>
-                                </div>
-                                <div class="overview-text">${{ accountBot[index].bot.accumulatedResult }}</div>
-                            </div>
-                        </div>
-                        <img src="layout/images/dashboard/rate.svg" />
-                    </div>
-
-                    <div v-else style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-2">
-                        <span class="overview-title"> Accumulated Result </span>
-                        <div class="flex justify-content-between">
-                            <div class="overview-detail flex justify-content-between">
-                                <div class="overview-badge flex justify-content-center align-items-center">
-                                    <i class="pi pi-arrow-up"></i>
-                                    <span>4,2%</span>
-                                </div>
-                                <div class="overview-text">${{ accountBot[index].bot.accumulatedResult }}</div>
-                            </div>
-
-                            <img src="layout/images/dashboard/value.svg" />
-                        </div>
-                    </div>
-
-                    <div v-if="accountBot[index].bot.accumulatedEarnings.substr(0, 1) == '-'" style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-1">
-                        <span class="overview-title"> Accumulated Earnings (Jet Trader) </span>
-                        <div class="flex justify-content-between">
-                            <div class="overview-detail flex justify-content-between">
-                                <div class="overview-badge flex justify-content-center align-items-center">
-                                    <i class="pi pi-arrow-down"></i>
-                                    <span>0.6%</span>
-                                </div>
-                                <div class="overview-text">${{ accountBot[index].bot.accumulatedEarnings }}</div>
-                            </div>
-                            <Button style="background: rgb(11, 209, 138); border: none; width: 90px" @click="confirm1($event)" icon="pi pi-check" label="Pay $" class="mr-2"></Button>
-                        </div>
-                    </div>
-                    <div v-else style="border-radius: 0px" class="col-12 md:col-3 sm:col-3 card widget-overview-box widget-overview-box-2">
-                        <div class="flex" style="place-items: center">
-                            <span class="overview-title" style="padding-right: 10px"> Accumulated Earnings (Jet Trader) </span>
-                            <Button
-                                @click="copyMessage(), showToast()"
-                                style="background-color: rgb(11, 209, 138); box-shadow: rgb(11 209 138 / 30%) 0px 6px 20px; border-radius: 8px"
-                                type="button"
-                                icon="pi pi-info"
-                                v-tooltip="'Click to copy sending wallet address'"
-                            />
-                        </div>
-                        <div class="flex justify-content-between">
-                            <div class="overview-detail flex justify-content-between">
-                                <div class="overview-badge flex justify-content-center align-items-center">
-                                    <i class="pi pi-arrow-up"></i>
-                                    <span>4,2%</span>
-                                </div>
-                                <div class="overview-text" style="padding-right: 100px">${{ accountBot[index].bot.accumulatedEarnings }}</div>
-                            </div>
-                            <InputText style="width: 100px" type="text" placeholder="Payment Hash" v-model="accountBot[index].bot.hash" />
-                            <Button
-                                v-if="accountBot[index].bot.hash === ''"
-                                :disabled="accountBot[index].bot.hash"
-                                style="background: rgb(11, 209, 138); border: none; width: 90px"
-                                @click="confirm1($event, accountBot[index].bot.id)"
-                                icon="pi pi-check"
-                                label=""
-                                class="mr-2"
-                            ></Button>
-                            <Button v-else style="background: rgb(11, 209, 138); border: none; width: 90px" @click="confirm1($event, accountBot[index].bot.id, accountBot[index].bot.hash)" icon="pi pi-check" label="" class="mr-2"></Button>
-                        </div>
-                    </div>
+                <div v-for="accountBot in accountBots" :key="accountBot.bot">
+                    <account-card-full :accountBot="accountBot"></account-card-full>
                 </div>
             </div>
         </div>
@@ -269,12 +98,14 @@
 </template>
 
 <script>
-import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
 import DASHBOARD from '@/service/dashboard';
-import axios from 'axios';
+
+import AccountCard from './Dashboard/AccountCard.vue';
+import AccountCardFull from './Dashboard/AccountCardFull.vue';
 
 export default {
+    components: { AccountCard, AccountCardFull },
     data() {
         return {
             index: 0,
@@ -283,95 +114,67 @@ export default {
                 id: '',
                 hash: '',
             },
-            accountBot: [],
-            // accountBot: [
-            //     {
-            //         id: '4542',
-            //         value: '308.2',
-            //         percent: '4.2',
-            //         bot: {
-            //             id: '4542',
-            //             amount: '308.2',
-            //             daily: '-0.6',
-            //             accumulatedGain: '12',
-            //             accumulatedEarnings: '120',
-            //             percent: '4.2',
-            //             hash: '',
-            //         },
-            //     },
-            //     {
-            //         id: '111',
-            //         value: '308.2',
-            //         percent: '4.2',
-            //         bot: {
-            //             id: '111',
-            //             amount: '308.2',
-            //             daily: '-0.6',
-            //             accumulatedGain: '12',
-            //             accumulatedEarnings: '120',
-            //             percent: '4.2',
-            //             hash: '',
-            //         },
-            //     },
-            // ],
+
+            accountBots: [
+                {
+                    id: '4542',
+                    value: '308.2',
+                    percent: '4.2',
+                    bot: {
+                        id: '4542',
+                        amount: '-308.2',
+                        daily: '-0.6',
+                        accumulatedResult: '12',
+                        accumulatedEarnings: '120',
+                        percent: '4.2',
+                        hash: '',
+                    },
+                },
+                {
+                    id: '111',
+                    value: '0',
+                    percent: '4.2',
+                    bot: {
+                        id: '111',
+                        amount: '0',
+                        daily: '0',
+                        accumulatedResult: '-12',
+                        accumulatedEarnings: '-120',
+                        percent: '4.2',
+                        hash: '',
+                    },
+                },
+                {
+                    id: '111',
+                    value: '-308.2',
+                    percent: '4.2',
+                    bot: {
+                        id: '111',
+                        amount: '308.2',
+                        daily: '0.6',
+                        accumulatedResult: '0',
+                        accumulatedEarnings: '0',
+                        percent: '4.2',
+                        hash: '',
+                    },
+                },
+            ],
             link: 'https://www.hfm.com/?refid=364649',
         };
     },
     created() {},
     mounted() {
-        this.getAccountBot();
+        // this.getAccountBot();
     },
     computed: {},
     methods: {
         async getAccountBot() {
             try {
                 const response = await DASHBOARD.getData();
-                this.accountBot = response.data;
+                this.accountBots = response.data;
             } catch (error) {
                 alert(error);
             }
-        },
-
-        confirm1(event, id, hash) {
-            this.paymentInfo.id = id;
-            this.paymentInfo.hash = hash;
-            console.log(this.paymentInfo);
-            this.$confirm.require({
-                target: event.currentTarget,
-                message: 'Are you sure you want to report the payment?',
-                icon: 'pi pi-shield',
-                accept: () => {
-                    this.$toast.add({ severity: 'info', summary: 'Confirmed', detail: 'Payment reported successfully', life: 3000 });
-                    axios
-                        .post('/api/submit', this.paymentInfo)
-                        .then((response) => {
-                            console.log(response.data);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });
-                },
-                reject: () => {
-                    this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'Uninformed payment', life: 3000 });
-                },
-            });
-        },
-        showToast() {
-            toast.success('Copied successfully, please send the amount indicated on the Accumulated Earnings panel to the address.', {
-                icon: '🚀',
-                autoClose: 5000,
-            });
-        },
-        copyMessage() {
-            navigator.clipboard.writeText(this.wallet).then(
-                function () {
-                    console.log('Copied to clipboard successfully!');
-                    this.showToast();
-                },
-                function (err) {
-                    console.error('Failed to copy: ', err);
-                }
-            );
         },
     },
 };

@@ -30,7 +30,6 @@ const routes = [
     {
         path: '/verification',
         name: 'verification',
-        beforeEnter: authenticated({ skipEmail: true }),
         component: () => import('./pages/Verification.vue'),
     },
     {
