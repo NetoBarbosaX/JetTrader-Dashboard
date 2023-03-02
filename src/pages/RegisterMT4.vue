@@ -24,7 +24,7 @@
                 </div>
                 <div class="field">
                     <label for="email1">Amount</label>
-                    <InputText placeholder="Server" id="Chain" type="text" v-model="userDataMT4.amount" />
+                    <InputText placeholder="Amount" id="Chain" type="number" v-model="userDataMT4.amount" />
                 </div>
                 <div style="text-align: center">
                     <Button :disabled="validFields" @click="handleSubmit" style="width: 25%" label="Create"></Button>
@@ -48,19 +48,13 @@
 </template>
 <script>
 import MT4 from '@/service/mt4.js';
+import { toast } from 'vue3-toastify';
 
 export default {
     data() {
         return {
             disabled: true,
             data: null,
-            user: {
-                name: 'Jet Trader',
-                email: 'exemplo@exemplo.com',
-                phone: '99 99999-9999',
-                password: 'adsadadasd',
-                confirmPassword: 'adsadadasd',
-            },
             userDataMT4: {
                 profile: '',
                 amount: '',
@@ -68,38 +62,35 @@ export default {
                 accountPassword: '',
                 accountAddress: '',
             },
-            dropdownItems: [
-                { name: 'Option 1', code: 'Option 1' },
-                { name: 'Option 2', code: 'Option 2' },
-                { name: 'Option 3', code: 'Option 3' },
-            ],
             dropdownItem: null,
         };
     },
     methods: {
         async handleSubmit() {
-            console.log(this.userDataMT4);
             if (!this.validFields) {
                 console.log(this.userDataMT4);
                 try {
                     await MT4.create(this.userDataMT4);
+                    this.showToast();
                 } catch (error) {
                     alert(error.menssage);
+                    this.showToastError();
                 }
             } else {
                 console.log('Please fill all the fields');
             }
         },
-        toggleDisabled() {
-            this.disabled = !this.disabled;
+        showToastError() {
+            toast.error('Error', {
+                icon: '🚀',
+                autoClose: 5000,
+            });
         },
-        handleChange() {
-            this.user.name = this.userEdit.name;
-            this.user.email = this.userEdit.email;
-            this.user.phone = this.userEdit.phone;
-            this.user.password = this.userEdit.password;
-            this.user.confirmPassword = this.userEdit.confirmPassword;
-            console.log(this.user);
+        showToast() {
+            toast.success('MT4 Register sent successfully', {
+                icon: '🚀',
+                autoClose: 5000,
+            });
         },
     },
     created() {
@@ -113,7 +104,7 @@ export default {
     },
     computed: {
         validFields() {
-            return this.userDataMT4.profile.trim() === '' || this.userDataMT4.accountId.trim() === '' || this.userDataMT4.accountPassword.trim() === '' || this.userDataMT4.accountAddress.trim() === '';
+            return this.userDataMT4.profile.trim() === '' || this.userDataMT4.accountId.trim() === '' || this.userDataMT4.accountPassword.trim() === '' || this.userDataMT4.accountAddress.trim() === '' || this.userDataMT4.amount.trim() === '';
         },
     },
 };

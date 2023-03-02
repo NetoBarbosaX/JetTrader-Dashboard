@@ -82,7 +82,7 @@
             <div class="col-12 md:col-12">
                 <h3>Active Accounts - MT4</h3>
             </div>
-            <div v-for="accountBot in accountBots" :key="accountBot.id" class="col-12 md:col-4">
+            <div v-for="accountBot in accountBots" :key="accountBot.value" class="col-12 md:col-4">
                 <account-card :accountBot="accountBot"></account-card>
             </div>
             <div class="col-12 md:col-12">
@@ -141,6 +141,20 @@ export default {
                         daily: '0',
                         accumulatedResult: '-12',
                         accumulatedEarnings: '-120',
+                        percent: '4.2',
+                        hash: '',
+                    },
+                },
+                {
+                    id: '111',
+                    value: '-308.2',
+                    percent: '4.2',
+                    bot: {
+                        id: '111',
+                        amount: '308.2',
+                        daily: '0.6',
+                        accumulatedResult: '0',
+                        accumulatedEarnings: '0',
                         percent: '4.2',
                         hash: '',
                     },

@@ -15,6 +15,9 @@ export default {
             state.token = token;
             state.user = user;
         },
+        changeProfile(state, newProfile) {
+            state.user.profile = newProfile;
+        },
     },
     actions: {
         async login({ commit }, data) {
@@ -41,5 +44,9 @@ export default {
         logout({ commit }) {
             commit('setLogin', { token: null, user: null });
         },
+
+        updateProfile({ commit }, newProfile) {
+            return commit('changeProfile', newProfile)
+          }
     },
 };

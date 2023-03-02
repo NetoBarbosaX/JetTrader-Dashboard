@@ -14,7 +14,7 @@
                     <Textarea style="width: 90%" v-model="dataTickets.text" rows="5" cols="30" />
                 </div>
                 <div style="text-align: center">
-                    <Button style="padding: 10px" @click="handleSubmit(), showToast()" label="Submit" />
+                    <Button :disabled="!dataTickets.text || !dataTickets.subject" style="padding: 10px" @click="processTickets()" label="Submit" />
                 </div>
             </div>
             <!-- <div class="card">
@@ -34,9 +34,9 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
 import { toast } from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
+import TICKETS from '@/service/tickets.js';
 
 export default {
     data() {
@@ -49,25 +49,25 @@ export default {
         };
     },
     methods: {
+        async processTickets() {
+            try {
+                await TICKETS.sendTickets(this.dataTickets);
+                this.showToast();
+            } catch (error) {
+                this.showToastError();
+            }
+        },
+        showToastError() {
+            toast.error('Error', {
+                icon: '🚀',
+                autoClose: 5000,
+            });
+        },
         showToast() {
             toast.success('Ticket sent successfully', {
                 icon: '🚀',
-                autoClose: 500,
+                autoClose: 5000,
             });
-        },
-        toggleDisabled() {
-            this.disabled = !this.disabled;
-        },
-        handleSubmit() {
-            console.log(this.dataTickets);
-            axios
-                .post('/api/submit', this.dataTickets)
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
         },
     },
     created() {

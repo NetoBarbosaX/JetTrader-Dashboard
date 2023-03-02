@@ -100,7 +100,7 @@
                 <span class="overview-title"> Accumulated Earnings (Jet Trader) </span>
                 <Button @click="copyMessage(), showToast()" class="p-button-rounded p-button-text" type="button" icon="pi pi-copy" v-tooltip="'Click to copy sending wallet address'" />
             </div>
-            <div class="flex justify-content-between align-items-center gap-3" >
+            <div class="flex justify-content-between align-items-center gap-3">
                 <div class="overview-detail flex justify-content-between">
                     <div class="overview-badge flex justify-content-center align-items-center">
                         <i
@@ -116,14 +116,7 @@
                     <div class="overview-text">${{ accountBot.bot.accumulatedEarnings }}</div>
                 </div>
                 <InputText class="flex-grow-1 flex-shrink-1 flex" style="width: 100px" type="text" placeholder="Payment Hash" v-model="hash" />
-                <Button
-                    :disabled="!this.hash"
-                    style="background: rgb(11, 209, 138); border: none;"
-                    @click="confirm($event, accountBot.bot.id)"
-                    icon="pi pi-check"
-                    label=""
-                    class="p-button-rounded p-button-small flex-shrink-0"
-                ></Button>
+                <Button :disabled="!this.hash" style="background: rgb(11, 209, 138); border: none" @click="confirm($event, accountBot.bot.id)" icon="pi pi-check" label="" class="p-button-rounded p-button-small flex-shrink-0"></Button>
             </div>
         </div>
     </div>

@@ -38,6 +38,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { toast } from 'vue3-toastify';
 
 export default {
     data() {
@@ -55,11 +56,17 @@ export default {
                 await this.login(this.userData);
                 this.redirect();
             } catch (error) {
-                alert(error);
+                this.showToastError();
             }
         },
         redirect() {
             this.$router.push(this.$route.query.redirect || '/');
+        },
+        showToastError() {
+            toast.error('Invalid credentials', {
+                icon: '🚀',
+                autoClose: 5000,
+            });
         },
     },
     mounted() {

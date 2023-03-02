@@ -36,6 +36,17 @@ const rpRequestToken = async ({ phone }) => {
         });
 };
 
+const validateEmail = async (token) => {
+    return await http
+        .patch(`/account/verify/${token}`, {
+            token,
+        })
+        .then((r) => r.data)
+        .catch((error) => {
+            throw error.response?.data || error.response || error;
+        });
+};
+
 const rpReadToken = async (token) => {
     return await http
 
@@ -51,6 +62,7 @@ const rpReadToken = async (token) => {
 export default {
     login,
     register,
+    validateEmail,
     resetPassword: {
         requestToken: rpRequestToken,
         readToken: rpReadToken,
