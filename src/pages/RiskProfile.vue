@@ -380,12 +380,12 @@ export default {
     created() {},
     mounted() {},
     methods: {
-        ...mapActions(['updateProfile']),
+        ...mapActions('auth', ['updateProfile']),
         async patchProcessRiskProfile() {
             (this.riskprofile = true),
                 await RIKSPROFILE.changeProfile(this.selectedProfile.name).then((r) => {
                     console.log(r.user.profile);
-                    this.$store.commit('updateProfile', r.user.profile);
+                    this.updateProfile(r.user.profile);
                     this.selectedProfile.name = r.user.profile;
                     this.riskprofile = r.user.profile;
                     console.log(this.selectedProfile);

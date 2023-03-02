@@ -47,12 +47,9 @@ const validateEmail = async (token) => {
         });
 };
 
-const rpReadToken = async (token) => {
+const renewToken = async () => {
     return await http
-
-        .get(`/auth/reset-password/${token}`, {
-            headers: {},
-        })
+        .get('/account/renewToken')
         .then((r) => r.data)
         .catch((error) => {
             throw error.response?.data || error.response || error;
@@ -63,8 +60,8 @@ export default {
     login,
     register,
     validateEmail,
+    renewToken,
     resetPassword: {
         requestToken: rpRequestToken,
-        readToken: rpReadToken,
     },
 };

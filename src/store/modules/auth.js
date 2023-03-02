@@ -46,7 +46,7 @@ export default {
         },
 
         updateProfile({ commit }, newProfile) {
-            return commit('changeProfile', newProfile)
-          }
+            return commit('changeProfile', newProfile);
+        },
     },
 };

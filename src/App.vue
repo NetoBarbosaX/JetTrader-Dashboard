@@ -45,7 +45,7 @@
 
             <AppFooter :colorScheme="colorScheme" />
         </div>
-
+            <renew-token />
         <AppRightMenu :rightMenuActive="rightMenuActive" @rightmenu-click="onRightMenuClick" @rightmenu-active="onChangeRightMenuActive" />
         <!-- 
 		<AppConfig v-model:menuMode="menuMode" :theme="theme" :componentTheme="componentTheme" :colorScheme="colorScheme" :configActive="configActive" :configClick="configClick"
@@ -62,6 +62,7 @@ import AppFooter from './AppFooter.vue';
 import AppBreadcrumb from './AppBreadcrumb.vue';
 // import AppConfig from './AppConfig.vue';
 import EventBus from './event-bus';
+import RenewToken from './components/RenewToken.vue';
 
 export default {
     emits: ['layout-mode-change', 'menu-theme', 'layoutModeChange', 'sidebar-mouse-over', 'sidebar-mouse-leave', 'change-color-scheme', 'change-component-theme', 'change-menu-theme', 'change-inlinemenu'],
@@ -324,6 +325,7 @@ export default {
         AppRightMenu,
         AppFooter,
         AppBreadcrumb,
+        RenewToken,
         // AppConfig
     },
 };
