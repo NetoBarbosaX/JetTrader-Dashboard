@@ -15,8 +15,16 @@
                 <div class="flex" style="justify-content: space-between">
                     <div class="flex" style="align-items: center">
                         <h3 style="font-weight: 500">Account status</h3>
-                        <div style="margin-left: 20px; margin-bottom: 11px; margin-right: 12px; background-color: rgb(11, 209, 138); box-shadow: rgb(11 209 138 / 30%) 0px 6px 20px; border-radius: 8px; padding: 11px; align-self: center">
-                            Conservative
+                        <div
+                            v-show="user.profile != ''"
+                            class=""
+                            :class="{
+                                conservative: user.profile === 'conservative',
+                                moderate: user.profile === 'moderate',
+                                aggressive: user.profile === 'aggressive',
+                            }"
+                        >
+                            <h3>{{ user.profile }}</h3>
                         </div>
                     </div>
                     <div class="grid" style="padding-bottom: 17px">
@@ -34,7 +42,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 md:col-4">
+            <div class="col-12 md:col-4 card" style="margin-right: 15px" v-if="!info">
+                <span>No information about AMOUNT CONTRIBUTED, create your MT4 account for more information.</span>
+            </div>
+            <div v-else class="col-12 md:col-4">
                 <div class="card widget-overview-box widget-overview-box-1">
                     <span class="overview-title"> AMOUNT CONTRIBUTED </span>
                     <div class="flex justify-content-between">
@@ -49,7 +60,10 @@
                     <img src="layout/images/dashboard/rate.svg" />
                 </div>
             </div>
-            <div class="col-12 md:col-4">
+            <div class="col-12 md:col-3 card" style="margin-right: 15px" v-if="!info">
+                <span>No information about REALIZED PROFIT, create your MT4 account for more information.</span>
+            </div>
+            <div v-else class="col-12 md:col-4">
                 <div class="card widget-overview-box widget-overview-box-2">
                     <span class="overview-title"> REALIZED PROFIT </span>
                     <div class="flex justify-content-between">
@@ -64,7 +78,10 @@
                     <img src="layout/images/dashboard/value.svg" />
                 </div>
             </div>
-            <div class="col-12 md:col-4">
+            <div class="col-12 md:col-4 card" style="margin-right: 15px" v-if="!info">
+                <span>No information about TOTAL OUTSTANDING AMOUNT, create your MT4 account for more information.</span>
+            </div>
+            <div v-else class="col-12 md:col-4">
                 <div class="card widget-overview-box widget-overview-box-3">
                     <span class="overview-title"> TOTAL OUTSTANDING AMOUNT </span>
                     <div class="flex justify-content-between">
@@ -111,94 +128,35 @@ export default {
             index: 0,
             wallet: '0x89566A6aa1943a6FDb178367229E132B51F6B343',
             userPlans: [],
+            uuid: [],
+            info: false,
             paymentInfo: {
                 id: '',
                 hash: '',
             },
 
-            accountBots: [
-                {
-                    id: '4542',
-                    value: '308.2',
-                    percent: '4.2',
-                    bot: {
-                        id: '4542',
-                        amount: '-308.2',
-                        daily: '-0.6',
-                        accumulatedResult: '12',
-                        accumulatedEarnings: '120',
-                        percent: '4.2',
-                        hash: '',
-                    },
-                },
-                {
-                    id: '111',
-                    value: '0',
-                    percent: '4.2',
-                    bot: {
-                        id: '111',
-                        amount: '0',
-                        daily: '0',
-                        accumulatedResult: '-12',
-                        accumulatedEarnings: '-120',
-                        percent: '4.2',
-                        hash: '',
-                    },
-                },
-                {
-                    id: '111',
-                    value: '-308.2',
-                    percent: '4.2',
-                    bot: {
-                        id: '111',
-                        amount: '308.2',
-                        daily: '0.6',
-                        accumulatedResult: '0',
-                        accumulatedEarnings: '0',
-                        percent: '4.2',
-                        hash: '',
-                    },
-                },
-                {
-                    id: '111',
-                    value: '-308.2',
-                    percent: '4.2',
-                    bot: {
-                        id: '111',
-                        amount: '308.2',
-                        daily: '0.6',
-                        accumulatedResult: '0',
-                        accumulatedEarnings: '0',
-                        percent: '4.2',
-                        hash: '',
-                    },
-                },
-            ],
+            accountBots: [],
             link: 'https://www.hfm.com/?refid=364649',
         };
     },
-    created() {},
-    mounted() {
-        // this.getAccountBot();
-        this.getUserInfo();
+    created() {
+        this.getAccountBot();
     },
+    mounted() {},
     computed: {
         ...mapGetters('auth', ['user']),
     },
     methods: {
         async getAccountBot() {
             try {
-                const response = await DASHBOARD.getData();
-                this.accountBots = response.data;
-            } catch (error) {
-                alert(error);
-            }
-        },
-        async getUserInfo(uuid) {
-            try {
-                const response = await DASHBOARD.getPlans(uuid);
-                this.userPlans = response.data;
-                console.log(this.userPlans);
+                const response = await DASHBOARD.getData(this.$store.state.auth.user._id);
+                this.accountBots = response;
+                if (this.accountBots.length > 0) {
+                    this.info = true;
+                } else {
+                    this.info = false;
+                }
+                console.log(this.accountBots);
             } catch (error) {
                 alert(error);
             }
@@ -207,7 +165,30 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.aggressive {
+    background-color: rgb(255, 135, 0);
+    box-shadow: rgb(11 209 138 / 30%) 0px 6px 20px;
+    border-radius: 8px;
+    padding: 11px;
+    margin-left: 15px;
+}
+
+.conservative {
+    background-color: rgb(11, 209, 138);
+    box-shadow: rgb(11 209 138 / 30%) 0px 6px 20px;
+    border-radius: 8px;
+    padding: 11px;
+    margin-left: 15px;
+}
+
+.moderate {
+    background-color: rgb(0, 208, 222);
+    box-shadow: rgb(11 209 138 / 30%) 0px 6px 20px;
+    border-radius: 8px;
+    padding: 11px;
+    margin-left: 15px;
+}
 ::v-deep(.p-progressbar) {
     height: 0.5rem;
     background-color: #d8dadc;

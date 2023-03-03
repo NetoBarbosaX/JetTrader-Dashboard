@@ -247,9 +247,9 @@
                 <div
                     v-show="user.profile != ''"
                     :class="{
-                        'widget-overview-box-2': valueStatus === 1,
-                        'widget-overview-box-3': valueStatus === 2,
-                        'widget-overview-box-1': valueStatus === 3,
+                        'widget-overview-box-2': user.profile === 'conservative',
+                        'widget-overview-box-3': user.profile === 'moderate',
+                        'widget-overview-box-1': user.profile === 'aggressive',
                     }"
                 >
                     <h3>Current profile - {{ user.profile }}</h3>
@@ -405,9 +405,14 @@ export default {
                 message: 'Are you sure you want to proceed?',
                 header: 'Confirmation',
                 icon: 'pi pi-exclamation-triangle',
-                accept: () => {
-                    this.$toast.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
-                    this.patchProcessRiskProfile();
+                accept: async () => {
+                    try {
+                        await this.patchProcessRiskProfile();
+
+                        this.$toast.add({ severity: 'info', summary: 'Salvo', detail: 'Salvo com sucesso', life: 3000 });
+                    } catch (error) {
+                        this.$toast.add({ severity: 'error', summary: 'Ocorreu um erro ao salvar', detail: error.message || 'Tente novamente mais tarde', life: 3000 });
+                    }
                 },
                 reject: () => {
                     this.$toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
