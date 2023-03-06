@@ -46,13 +46,11 @@ export default {
     methods: {
         onRowEditSave(event) {
             let { newData, index } = event;
-            debugger;
             this.editTable.data[index] = newData;
             console.log(this.editTable.data);
             axios
-                .post('/api/submit', this.editTable.data)
+                .post('/api/submit', this.editTable.data[index])
                 .then((response) => {
-                    debugger;
                     console.log(response.data);
                 })
                 .catch((error) => {

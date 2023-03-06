@@ -14,7 +14,7 @@
                         </span>
                         <span class="p-input-icon-left">
                             <i class="pi pi-book"></i>
-                            <InputText type="name" placeholder="Name" v-model="userData.name" />
+                            <InputText type="text" placeholder="Name" v-model="userData.name" />
                         </span>
                     </div>
                     <div class="form-container">
@@ -28,7 +28,7 @@
                         </span>
                         <span class="p-input-icon-left">
                             <i class="pi pi-phone"></i>
-                            <InputText type="phone" placeholder="Phone" v-model="userData.cellphone" />
+                            <InputMask mask="99-999999999" type="phone" placeholder="Phone" v-model="userData.cellphone" />
                         </span>
                     </div>
                     <div class="flex">
@@ -65,6 +65,9 @@ export default {
             confirmPassword: '',
             checked: false,
             disabled: true,
+            rules: {
+                email: [(v) => !!v || 'E-mail é obrigatório', (v) => /.+@.+\..+/.test(v) || 'E-mail inválido'],
+            },
             userData: {
                 name: '',
                 email: '',
@@ -100,7 +103,15 @@ export default {
             return 'light';
         },
         validFields() {
-            return this.userData.name.trim() === '' || this.userData.email.trim() === '' || this.userData.password.trim() === '' || this.confirmPassword.trim() === '' || this.userData.cellphone.trim() === '' || this.checked == false;
+            return (
+                this.userData.name.trim() === '' ||
+                this.userData.email.trim() === '' ||
+                this.userData.password == this.confirmPassword ||
+                this.userData.password.trim() === '' ||
+                this.confirmPassword.trim() === '' ||
+                this.userData.cellphone.trim() === '' ||
+                this.checked == false
+            );
         },
     },
 };

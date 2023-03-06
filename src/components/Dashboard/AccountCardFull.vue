@@ -1,7 +1,7 @@
 <template>
     <div class="grid">
         <div class="col-12" style="width: 100%; margin-bottom: 11px; background-color: rgb(11, 209, 138); box-shadow: rgb(11 209 138 / 30%) 0px 6px 20px; border-radius: 8px; padding: 11px; align-self: center">
-            {{ accountBot.bot.id }}
+            {{ accountBot.bot.accountId }}
         </div>
         <div
             :class="{
@@ -54,7 +54,7 @@
                         />
                         <span>0.6%</span>
                     </div>
-                    <div class="overview-text">${{ accountBot.bot.daily }}</div>
+                    <div class="overview-text">${{ accountBot.bot.result }}</div>
                 </div>
             </div>
             <img :src="`layout/images/dashboard/${imgIndex[dailyStatus]}.svg`" />
@@ -82,7 +82,7 @@
                         />
                         <span>0.6%</span>
                     </div>
-                    <div class="overview-text">${{ accountBot.bot.accumulatedResult }}</div>
+                    <div class="overview-text">${{ accountBot.bot.liquidResult }}</div>
                 </div>
             </div>
             <img :src="`layout/images/dashboard/${imgIndex[resultsStatus]}.svg`" />
@@ -113,10 +113,10 @@
                         />
                         <span>0.6%</span>
                     </div>
-                    <div class="overview-text">${{ accountBot.bot.accumulatedEarnings }}</div>
+                    <div class="overview-text">${{ accountBot.bot.performanceFee }}</div>
                 </div>
                 <InputText class="flex-grow-1 flex-shrink-1 flex" style="width: 100px" type="text" placeholder="Payment Hash" v-model="hash" />
-                <Button :disabled="!this.hash" style="background: rgb(11, 209, 138); border: none" @click="confirm($event, accountBot.bot.id)" icon="pi pi-check" label="" class="p-button-rounded p-button-small flex-shrink-0"></Button>
+                <Button :disabled="!this.hash" style="background: rgb(11, 209, 138); border: none" @click="confirm($event, accountBot.bot.accountId)" icon="pi pi-check" label="" class="p-button-rounded p-button-small flex-shrink-0"></Button>
             </div>
         </div>
     </div>
@@ -142,22 +142,22 @@ export default {
         },
 
         dailyStatus() {
-            var n = parseFloat(this.accountBot.bot.daily);
+            var n = parseFloat(this.accountBot.bot.result);
             return n > 0 ? 1 : n < 0 ? -1 : 0;
         },
         resultsStatus() {
-            var n = parseFloat(this.accountBot.bot.accumulatedResult);
+            var n = parseFloat(this.accountBot.bot.liquidResult);
             return n > 0 ? 1 : n < 0 ? -1 : 0;
         },
         earnStatus() {
-            var n = parseFloat(this.accountBot.bot.accumulatedEarnings);
+            var n = parseFloat(this.accountBot.bot.performanceFee);
             return n > 0 ? 1 : n < 0 ? -1 : 0;
         },
     },
     methods: {
         confirm(event) {
             var obj = {
-                id: this.accountBot.bot.id,
+                id: this.accountBot.bot.accountId,
                 hash: this.hash,
             };
             this.$confirm.require({

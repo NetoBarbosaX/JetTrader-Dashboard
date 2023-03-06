@@ -1,6 +1,6 @@
 <template>
     <div :class="{ 'widget-overview-box-2': valueStatus === 1, 'widget-overview-box-3': valueStatus === 0, 'widget-overview-box-1': valueStatus === -1 }" class="card widget-overview-box">
-        <span class="overview-title">Account {{ accountBot.id }}</span>
+        <span class="overview-title">Account {{ accountBot._id }}</span>
         <div class="flex justify-content-between">
             <div class="overview-detail flex justify-content-between">
                 <div class="overview-badge flex justify-content-center align-items-center">
@@ -14,7 +14,7 @@
                     />
                     <span>{{ accountBot.percent }}%</span>
                 </div>
-                <div class="overview-text">${{ accountBot.value }}</div>
+                <div class="overview-text">${{ accountBot.initialAmount }}</div>
             </div>
         </div>
         <img :src="`layout/images/dashboard/${imgIndex[valueStatus]}.svg`" />
@@ -32,7 +32,7 @@ export default {
     }),
     computed: {
         valueStatus() {
-            var n = parseFloat(this.accountBot.value);
+            var n = parseFloat(this.accountBot.initialAmount);
             return n > 0 ? 1 : n < 0 ? -1 : 0;
         },
     },

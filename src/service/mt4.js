@@ -9,6 +9,16 @@ const create = async (data) => {
         });
 };
 
+const getData = async () => {
+    return await http
+        .get('/plans/list/byuserid/')
+        .then((r) => r.data)
+        .catch((error) => {
+            throw error.response?.data || error.response || error;
+        });
+};
+
 export default {
     create,
+    getData,
 };

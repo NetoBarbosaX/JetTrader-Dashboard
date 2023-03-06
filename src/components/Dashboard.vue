@@ -52,9 +52,9 @@
                         <div class="overview-detail flex justify-content-between">
                             <div class="overview-badge flex justify-content-center align-items-center">
                                 <i class="pi pi-arrow-down"></i>
-                                <span>0.6%</span>
+                                <span>0%</span>
                             </div>
-                            <div class="overview-text">0.81%</div>
+                            <div class="overview-text">0</div>
                         </div>
                     </div>
                     <img src="layout/images/dashboard/rate.svg" />
@@ -70,9 +70,9 @@
                         <div class="overview-detail flex justify-content-between">
                             <div class="overview-badge flex justify-content-center align-items-center">
                                 <i class="pi pi-arrow-up"></i>
-                                <span>4,2%</span>
+                                <span>0%</span>
                             </div>
-                            <div class="overview-text">$306.2</div>
+                            <div class="overview-text">0</div>
                         </div>
                     </div>
                     <img src="layout/images/dashboard/value.svg" />
@@ -88,9 +88,9 @@
                         <div class="overview-detail flex justify-content-between">
                             <div class="overview-badge flex justify-content-center align-items-center">
                                 <i class="pi pi-minus"></i>
-                                <span>2,1%</span>
+                                <span>0%</span>
                             </div>
-                            <div class="overview-text">1,620</div>
+                            <div class="overview-text">0</div>
                         </div>
                     </div>
                     <img src="layout/images/dashboard/quantity.svg" />
@@ -149,8 +149,10 @@ export default {
     methods: {
         async getAccountBot() {
             try {
-                const response = await DASHBOARD.getData(this.$store.state.auth.user._id);
-                this.accountBots = response;
+                const response = await DASHBOARD.getData();
+                this.response = response;
+                this.accountBots = this.response.accountBot;
+                console.log(this.response);
                 if (this.accountBots.length > 0) {
                     this.info = true;
                 } else {

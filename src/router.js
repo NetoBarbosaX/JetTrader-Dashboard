@@ -96,6 +96,12 @@ const routes = [
         beforeEnter: authenticated(),
         component: () => import('./PagesAdmin/ActivatePlan.vue'),
     },
+    {
+        path: '/blockedUsers',
+        name: 'blockedUsers',
+        beforeEnter: authenticated(),
+        component: () => import('./PagesAdmin/BlockedUsers.vue'),
+    },
 ];
 
 const router = createRouter({

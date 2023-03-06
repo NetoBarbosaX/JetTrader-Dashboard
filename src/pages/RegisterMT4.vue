@@ -8,7 +8,7 @@
                 <h5>New Account</h5>
                 <div class="field">
                     <label for="name1"> Account Name</label>
-                    <InputText placeholder="Name" id="name1" type="text" v-model="userDataMT4.profile" />
+                    <InputText placeholder="Name" id="name1" type="text" v-model="userDataMT4.name" />
                 </div>
                 <div class="field">
                     <label for="name1">Trading Account Number (ID)</label>
@@ -31,16 +31,13 @@
                 </div>
             </div>
             <div class="card">
-                <DataTable :value="products" responsiveLayout="scroll">
+                <DataTable :value="dataTable" responsiveLayout="scroll">
                     <template #header> Historic </template>
-                    <Column field="code" header="Trading Account Number"></Column>
+                    <Column field="accountAddress" header="Trading Account Number"></Column>
+                    <Column field="amount" header="Amount"></Column>
+                    <Column field="profile" header="Risk Profile"></Column>
                     <Column field="name" header="Name"></Column>
-                    <Column field="category" header="Risk Profile"></Column>
-                    <Column field="inventoryStatus" header="Status" style="width: 1px">
-                        <template #body="slotProps">
-                            <span :class="'product-badge status-' + (slotProps.data.inventoryStatus ? slotProps.data.inventoryStatus.toLowerCase() : '')">{{ slotProps.data.inventoryStatus }}</span>
-                        </template>
-                    </Column>
+                    <Column field="status" header="Status"> </Column>
                 </DataTable>
             </div>
         </div>
@@ -56,13 +53,17 @@ export default {
             disabled: true,
             data: null,
             userDataMT4: {
-                profile: '',
+                name: '',
                 amount: '',
                 accountId: '',
                 accountPassword: '',
                 accountAddress: '',
+                profile: '',
             },
+            dataTable: [],
             dropdownItem: null,
+            valuesToRemove: ['pending approval', 'blocked', 'pending removal', 'payment to be confirmed'],
+            filteredItems: [],
         };
     },
     methods: {
@@ -80,6 +81,16 @@ export default {
                 console.log('Please fill all the fields');
             }
         },
+
+        async getProcessData() {
+            try {
+                const response = await MT4.getData();
+                this.dataTable = response;
+                console.log(this.dataTable);
+            } catch (error) {
+                alert(error);
+            }
+        },
         showToastError() {
             toast.error('Error', {
                 icon: '🚀',
@@ -94,24 +105,26 @@ export default {
         },
     },
     created() {
-        this.products = [
-            { code: 'f230fh0g3', name: 'Marco', category: 'Conservative', inventoryStatus: 'Approved' },
-            { code: 'zz21cz3c1', name: 'Elias', category: 'Conservative', inventoryStatus: 'Denied' },
-            { code: '244wgerg2', name: 'Juka', category: 'Moderate', inventoryStatus: 'Approved' },
-            { code: 'av2231fwg', name: 'Elias Sales', category: 'Audacious', inventoryStatus: 'Pending' },
-            { code: 'bib36pfvm', name: 'Uzias', category: 'Audacious', inventoryStatus: 'Denied' },
-        ];
+        this.userDataMT4.profile = this.$store.state.auth.user.profile;
+        this.getProcessData();
     },
     computed: {
         validFields() {
-            return this.userDataMT4.profile.trim() === '' || this.userDataMT4.accountId.trim() === '' || this.userDataMT4.accountPassword.trim() === '' || this.userDataMT4.accountAddress.trim() === '' || this.userDataMT4.amount.trim() === '';
+            return this.userDataMT4.name.trim() === '' || this.userDataMT4.accountId.trim() === '' || this.userDataMT4.accountPassword.trim() === '' || this.userDataMT4.accountAddress.trim() === '' || this.userDataMT4.amount.trim() === '';
         },
+    },
+    mounted() {
+        // this.dataTable = this.items.filter((item) => {
+        //     return !this.valuesToRemove.includes(item.name);
+        // });
+        // this.items = this.dataTable;
+        // console.log(this.items);
     },
 };
 </script>
 
 <style>
-.product-badge.status-denied {
+.active {
     background: #ffcdd2;
     color: #c63737;
     padding: 5px;
@@ -120,7 +133,7 @@ export default {
     padding-right: 22px;
 }
 
-.product-badge.status-approved {
+.pending-payment {
     background: #c8e6c9;
     color: #256029;
     padding: 5px;
@@ -128,7 +141,42 @@ export default {
     font-weight: 700;
 }
 
-.product-badge.status-pending {
+.blocked {
+    background: #feedaf;
+    color: #8a5340;
+    padding: 5px;
+    border-radius: 4px;
+    font-weight: 700;
+    padding-right: 16px;
+}
+
+.pending-removal {
+    background: #ffcdd2;
+    color: #c63737;
+    padding: 5px;
+    border-radius: 4px;
+    font-weight: 700;
+    padding-right: 22px;
+}
+
+.payment-to-be-confirmed {
+    background: #c8e6c9;
+    color: #256029;
+    padding: 5px;
+    border-radius: 4px;
+    font-weight: 700;
+}
+
+.rejected {
+    background: #feedaf;
+    color: #8a5340;
+    padding: 5px;
+    border-radius: 4px;
+    font-weight: 700;
+    padding-right: 16px;
+}
+
+.pending-approval {
     background: #feedaf;
     color: #8a5340;
     padding: 5px;

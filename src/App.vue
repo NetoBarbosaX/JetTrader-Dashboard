@@ -20,7 +20,7 @@
             />
 
             <AppMenu
-                :model="admin ? menuAdmin : menu"
+                :model="admin === 'admin' ? menuAdmin : menu"
                 :menuMode="menuMode"
                 :colorScheme="colorScheme"
                 :menuActive="menuActive"
@@ -45,7 +45,7 @@
 
             <AppFooter :colorScheme="colorScheme" />
         </div>
-            <renew-token />
+        <renew-token />
         <AppRightMenu :rightMenuActive="rightMenuActive" @rightmenu-click="onRightMenuClick" @rightmenu-active="onChangeRightMenuActive" />
         <!-- 
 		<AppConfig v-model:menuMode="menuMode" :theme="theme" :componentTheme="componentTheme" :colorScheme="colorScheme" :configActive="configActive" :configClick="configClick"
@@ -63,6 +63,7 @@ import AppBreadcrumb from './AppBreadcrumb.vue';
 // import AppConfig from './AppConfig.vue';
 import EventBus from './event-bus';
 import RenewToken from './components/RenewToken.vue';
+import { mapGetters } from 'vuex';
 
 export default {
     emits: ['layout-mode-change', 'menu-theme', 'layoutModeChange', 'sidebar-mouse-over', 'sidebar-mouse-leave', 'change-color-scheme', 'change-component-theme', 'change-menu-theme', 'change-inlinemenu'],
@@ -74,7 +75,7 @@ export default {
     },
     data() {
         return {
-            admin: false,
+            admin: '',
             search: false,
             searchClick: false,
             searchActive: false,
@@ -106,6 +107,8 @@ export default {
                 { label: 'Users', icon: 'pi pi-fw pi-cog', to: '/usersAdmin' },
                 { label: 'Activate Plan', icon: 'pi pi-fw pi-check-square', to: '/activatePlan' },
                 { label: 'Finance', icon: 'pi pi-fw pi-money-bill', to: '/finance' },
+
+                { label: 'Blocked Users', icon: 'pi pi-fw pi-lock', to: '/blockedUsers' },
             ],
         };
     },
@@ -114,6 +117,9 @@ export default {
             this.menuActive = false;
             this.$toast.removeAllGroups();
         },
+    },
+    created() {
+        this.admin = this.$store.state.auth.user.role;
     },
     methods: {
         onDocumentClick() {
@@ -300,6 +306,7 @@ export default {
         },
     },
     computed: {
+        ...mapGetters('auth', ['user']),
         layoutContainerClass() {
             return [
                 'layout-wrapper',
