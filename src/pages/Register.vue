@@ -65,9 +65,6 @@ export default {
             confirmPassword: '',
             checked: false,
             disabled: true,
-            rules: {
-                email: [(v) => !!v || 'E-mail é obrigatório', (v) => /.+@.+\..+/.test(v) || 'E-mail inválido'],
-            },
             userData: {
                 name: '',
                 email: '',
@@ -106,7 +103,6 @@ export default {
             return (
                 this.userData.name.trim() === '' ||
                 this.userData.email.trim() === '' ||
-                this.userData.password == this.confirmPassword ||
                 this.userData.password.trim() === '' ||
                 this.confirmPassword.trim() === '' ||
                 this.userData.cellphone.trim() === '' ||
