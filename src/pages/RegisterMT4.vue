@@ -33,7 +33,8 @@
             <div class="card">
                 <DataTable :value="dataTable" responsiveLayout="scroll">
                     <template #header> Historic </template>
-                    <Column field="accountAddress" header="Trading Account Number"></Column>
+                    <Column field="accountId" header="Trading Account Number"></Column>
+                    <Column field="accountAddress" header="Server"></Column>
                     <Column field="amount" header="Amount"></Column>
                     <Column field="profile" header="Risk Profile"></Column>
                     <Column field="name" header="Name"></Column>

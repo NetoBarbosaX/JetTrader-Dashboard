@@ -22,14 +22,13 @@
                         <Button :disabled="validFields" type="button" @click="processLogin" label="Login"></Button>
                         <span>Don’t have an account?<a href="/register">Sign-up here</a></span>
                     </div>
-                </div>
-
-                <div class="login-footer flex align-items-center">
-                    <div class="flex align-items-center login-footer-logo-container">
-                        <img :src="'layout/images/logo-' + color + '.svg'" class="login-logo" style="width: 30px" />
-                        <img :src="'layout/images/appname-' + color + '.svg'" class="login-appname" style="width: 120px" />
+                    <div class="flex flex-column">
+                        <div class="flex align-items-center login-footer-logo-container">
+                            <img :src="'layout/images/logo-' + color + '.svg'" class="login-logo" style="width: 30px" />
+                            <img :src="'layout/images/appname-' + color + '.svg'" class="login-appname" style="width: 120px" />
+                            <span style="font-weight: 600; color: gray">Copyright 2023</span>
+                        </div>
                     </div>
-                    <span>Copyright 2023</span>
                 </div>
             </div>
         </div>
