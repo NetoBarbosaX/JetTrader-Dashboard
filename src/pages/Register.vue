@@ -1,5 +1,5 @@
 <template>
-    <div class="login-body" style="justify-content: end; height: 100%">
+    <div class="login-body" style="justify-content: end; height: 90%">
         <div>
             <div class="login-panel p-fluid">
                 <div class="flex flex-column">
