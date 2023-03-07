@@ -26,6 +26,10 @@
                     <label for="email1">Amount</label>
                     <InputText placeholder="Amount" id="Chain" type="number" v-model="userDataMT4.amount" />
                 </div>
+                <div class="field">
+                    <label for="email1">Risk Profile</label>
+                    <InputText :placeholder="user.profile" id="Chain" disabled v-model="userDataMT4.amount" />
+                </div>
                 <div style="text-align: center">
                     <Button :disabled="validFields" @click="handleSubmit" style="width: 25%" label="Create"></Button>
                 </div>
@@ -47,6 +51,7 @@
 <script>
 import MT4 from '@/service/mt4.js';
 import { toast } from 'vue3-toastify';
+import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -110,6 +115,7 @@ export default {
         this.getProcessData();
     },
     computed: {
+        ...mapGetters('auth', ['user']),
         validFields() {
             return this.userDataMT4.name.trim() === '' || this.userDataMT4.accountId.trim() === '' || this.userDataMT4.accountPassword.trim() === '' || this.userDataMT4.accountAddress.trim() === '' || this.userDataMT4.amount.trim() === '';
         },
