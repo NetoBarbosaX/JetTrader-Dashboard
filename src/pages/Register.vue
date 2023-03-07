@@ -58,6 +58,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import AUTH from '@/service/auth';
 
 export default {
     data() {
@@ -80,6 +81,7 @@ export default {
                 console.log(this.userData);
                 try {
                     await this.register(this.userData);
+                    await AUTH.activateAccount(this.userData.email);
                     this.$router.push('/verification');
                 } catch (error) {
                     alert(error.menssage);
@@ -100,14 +102,7 @@ export default {
             return 'light';
         },
         validFields() {
-            return (
-                this.userData.name.trim() === '' ||
-                this.userData.email.trim() === '' ||
-                this.userData.password.trim() === '' ||
-                this.confirmPassword.trim() === '' ||
-                this.userData.cellphone.trim() === '' ||
-                this.checked == false
-            );
+            return this.userData.name.trim() === '' || this.userData.email.trim() === '' || this.userData.password.trim() === '' || this.confirmPassword.trim() === '' || this.userData.cellphone.trim() === '' || this.checked == false;
         },
     },
 };

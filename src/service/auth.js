@@ -22,6 +22,18 @@ const register = async (data) => {
         .catch((error) => {
             throw error.response?.data || error.response || error;
         });
+        
+};
+
+const activateAccount = async (email) => {
+    return await http
+        .post('/account/verify', {
+            email,
+        })
+        .then((r) => r.data)
+        .catch((error) => {
+            throw error.response?.data || error.response || error;
+        });
 };
 
 // Reset password
@@ -61,6 +73,7 @@ export default {
     register,
     validateEmail,
     renewToken,
+    activateAccount,
     resetPassword: {
         requestToken: rpRequestToken,
     },
