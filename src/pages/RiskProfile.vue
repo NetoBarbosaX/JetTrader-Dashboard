@@ -230,6 +230,7 @@
         <Button :disabled="validFields" @click="processProfile" label="Submit" />
     </div>
     <div v-else class="grid p-fluid" style="justify-content: end">
+        <div v-if="user.profile == null" style="background-color: #ffc100" class="col-12 md:col-12 widget-overview-box-3"><span>Select your risk profile to save the questionnaire!</span></div>
         <div class="col-12 md:col-12">
             <div style="padding-bottom: 25px">
                 <h2 style="padding-right: 10px">Risk Profile</h2>
@@ -409,9 +410,9 @@ export default {
                     try {
                         await this.patchProcessRiskProfile();
 
-                        this.$toast.add({ severity: 'info', summary: 'Salvo', detail: 'Salvo com sucesso', life: 3000 });
+                        this.$toast.add({ severity: 'info', summary: 'Saved', detail: 'Risk Profile Saved', life: 3000 });
                     } catch (error) {
-                        this.$toast.add({ severity: 'error', summary: 'Ocorreu um erro ao salvar', detail: error.message || 'Tente novamente mais tarde', life: 3000 });
+                        this.$toast.add({ severity: 'error', summary: 'Error', detail: error.message || 'Tente novamente mais tarde', life: 3000 });
                     }
                 },
                 reject: () => {
