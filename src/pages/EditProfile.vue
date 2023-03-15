@@ -16,7 +16,7 @@
                 </div>
                 <div class="field">
                     <label for="phone1">Phone</label>
-                    <InputText v-model="userEdit.phone" :placeholder="user.phone" :disabled="disabled" id="phone1" type="text" />
+                    <InputText v-model="userEdit.cellphone" :placeholder="user.cellphone" :disabled="disabled" id="phone1" type="text" />
                 </div>
                 <div class="field">
                     <label for="age1">Password</label>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="field">
                     <label for="age1">Confirm Password</label>
-                    <InputText v-model="userEdit.confirmPassword" placeholder="********" :disabled="disabled" id="age1" type="password" />
+                    <InputText v-model="confirmPassword" placeholder="********" :disabled="disabled" id="age1" type="password" />
                 </div>
                 <div style="text-align: center">
                     <Button @click="toggleDisabled(), handleSubmit()" :disabled="disabled" style="width: 25%" label="Submit"></Button>
@@ -34,25 +34,20 @@
     </div>
 </template>
 <script>
-import axios from 'axios';
+import PROFILE from '@/service/profile.js';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     data() {
         return {
             disabled: true,
-            user: {
-                name: 'Jet Trader',
-                email: 'exemplo@exemplo.com',
-                phone: '99 99999-9999',
-                password: 'adsadadasd',
-                confirmPassword: 'adsadadasd',
-            },
+            confirmPassword: '',
+            emailBase: '',
             userEdit: {
                 name: '',
                 email: '',
-                phone: '',
+                cellphone: '',
                 password: '',
-                confirmPassword: '',
             },
             dropdownItems: [
                 { name: 'Option 1', code: 'Option 1' },
@@ -63,20 +58,21 @@ export default {
         };
     },
     methods: {
+        ...mapActions('auth', ['logout']),
+        processLogout() {
+            this.logout();
+            this.$router.push('/login');
+        },
         toggleDisabled() {
             this.disabled = !this.disabled;
         },
-        handleSubmit() {
-            console.log(this.userEdit);
-            axios
-                .post('/api/submit', this.userEdit)
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        async handleSubmit() {
+            await PROFILE.updateProfile(this.userEdit);
         },
+    },
+    mounted() {},
+    computed: {
+        ...mapGetters('auth', ['user']),
     },
 };
 </script>
