@@ -1,29 +1,10 @@
-# atlantis-vue
+# Jet Trader - Dashboard
 
-## Project setup
+## Auth
 
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
+### Login/Register
 
-```
-npm run serve
-```
 
-### Compiles and minifies for production
+### Pages
 
-```
-npm run build
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
